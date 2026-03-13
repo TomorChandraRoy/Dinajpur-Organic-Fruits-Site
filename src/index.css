@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+@import "tailwindcss";
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #2d6a4f ; --green-light: #52b788; --green-pale: #d8f3dc; --green-dark:#1b4332;
+    --amber: #e76f00; --cream: #fefae0; --dark: #1b1b1b;
+    --gray: #6b7280; --white: #ffffff; --border: #e5e7eb;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Hind Siliguri', sans-serif; background: #fff; color: var(--dark); overflow-x: hidden; }
+
+}
+
+@layer components {}
