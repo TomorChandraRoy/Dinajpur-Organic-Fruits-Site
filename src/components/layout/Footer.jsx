@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-[#1b2d24] text-[rgba(255,255,255,0.72)] pt-14 pb-7 px-6">
@@ -6,7 +8,7 @@ const Footer = () => {
 
         {/* Logo & Description */}
         <div>
-            <a href="#" className="flex items-center gap-[10px] no-underline shrink-0">
+            <Link to="/" className="flex items-center gap-[10px] no-underline shrink-0">
               <div className="w-11 h-11  rounded-[10px] flex items-center justify-center text-[22px]">
                 <img src="/src/assets/sublogo.png" alt="logo" className="w-full h-full object-cover" />
               </div>
@@ -16,7 +18,7 @@ const Footer = () => {
                 </strong>
                 <span className="text-[11px] text-[var(--gray)] leading-tight">বিশুদ্ধতা ও স্বাদের নিশ্চয়তা</span>
               </div>
-            </a>
+            </Link>
           <p className="text-[12.5px] leading-[1.8] mb-4">
             Your trusted source for safe, healthy, and organic food products delivered across Bangladesh.
           </p>

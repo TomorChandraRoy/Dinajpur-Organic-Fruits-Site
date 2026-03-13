@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 
 const Header = () => {
@@ -11,42 +12,42 @@ const Header = () => {
         <div className="lg:hidden bg-white border-b border-[var(--border)] shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
           <div className="max-w-[1280px] mx-auto px-4 py-[12px]">
             <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              className="w-10 h-10 rounded-lg border border-[var(--border)] flex items-center justify-center"
-              aria-label="Open menu"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              <button
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                className="w-10 h-10 rounded-lg border border-[var(--border)] flex items-center justify-center"
+                aria-label="Open menu"
               >
-                <path d="M3 6h18M3 12h18M3 18h18" stroke="#1f2d26" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M3 6h18M3 12h18M3 18h18" stroke="#1f2d26" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </button>
 
-            <a href="#" className="flex items-center gap-[8px] no-underline">
-              <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[20px]">
-                <img src="/src/assets/sublogo.png" alt="logo" className="w-full h-full object-cover" />
-              </div>
-              <div className="leading-tight">
-                <strong className="block text-[15px] text-[var(--green)] font-['Playfair_Display']">
-                  Dinajpur Organic Fruits
-                </strong>
-                <span className="block text-[10px] text-[var(--gray)]">বিশুদ্ধতা ও স্বাদের নিশ্চয়তা</span>
-              </div>
-            </a>
+              <Link to="/" className="flex items-center gap-[8px] no-underline">
+                <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[20px]">
+                  <img src="/src/assets/sublogo.png" alt="logo" className="w-full h-full object-cover" />
+                </div>
+                <div className="leading-tight">
+                  <strong className="block text-[15px] text-[var(--green)] font-['Playfair_Display']">
+                    Dinajpur Organic Fruits
+                  </strong>
+                  <span className="block text-[10px] text-[var(--gray)]">বিশুদ্ধতা ও স্বাদের নিশ্চয়তা</span>
+                </div>
+              </Link>
 
-            <a href="#" className="no-underline text-[var(--dark)] text-[12px] flex flex-col items-center gap-[2px] relative">
-              <span className="text-[20px]">🛒</span>
-              <span>Cart</span>
-              <span className="absolute top-[-6px] right-[-6px] bg-[var(--amber)] text-white rounded-full w-[16px] h-[16px] text-[10px] flex items-center justify-center font-bold">
-                0
-              </span>
-            </a>
+              <a href="#" className="no-underline text-[var(--dark)] text-[12px] flex flex-col items-center gap-[2px] relative">
+                <span className="text-[20px]">🛒</span>
+                <span>Cart</span>
+                <span className="absolute top-[-6px] right-[-6px] bg-[var(--amber)] text-white rounded-full w-[16px] h-[16px] text-[10px] flex items-center justify-center font-bold">
+                  0
+                </span>
+              </a>
             </div>
 
             <div className="mt-3 border-2 border-[var(--border)] rounded-full overflow-hidden transition-colors focus-within:border-[var(--green)] flex">
@@ -66,7 +67,7 @@ const Header = () => {
         <header className="hidden lg:block bg-white border-b border-[var(--border)] shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
           <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 sm:px-6 py-[14px] gap-3 md:gap-4">
             <div className="w-full flex items-center justify-center md:justify-between md:w-auto">
-              <a href="#" className="flex items-center gap-[10px] no-underline shrink-0">
+              <Link to="/" className="flex items-center gap-[10px] no-underline shrink-0">
                 <div className="w-11 h-11 rounded-[10px] flex items-center justify-center text-[22px]">
                   <img src="/src/assets/sublogo.png" alt="logo" className="w-full h-full object-cover" />
                 </div>
@@ -76,7 +77,7 @@ const Header = () => {
                   </strong>
                   <span className="text-[11px] text-[var(--gray)] leading-tight">বিশুদ্ধতা ও স্বাদের নিশ্চয়তা</span>
                 </div>
-              </a>
+              </Link>
             </div>
 
             <div className="w-full md:flex-1 md:max-w-[480px] flex order-3 md:order-none border-2 border-[var(--border)] rounded-full overflow-hidden transition-colors focus-within:border-[var(--green)] md:mx-4">
