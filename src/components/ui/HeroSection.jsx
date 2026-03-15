@@ -39,45 +39,16 @@ const HeroSection = () => {
         {/* Right Visual */}
         <div className="grid grid-cols-2 gap-[14px]">
           <div className="bg-[rgba(255,255,255,.12)]  border border-[rgba(255,255,255,.2)] rounded-[16px]  text-center transition-transform duration-300 cursor-pointer hover:-translate-y-[4px] row-span-2 flex flex-col justify-center">
-            {/* <span className="text-[36px] sm:text-[40px] block mb-[8px]">🍯</span>//p-[18px] sm:p-[20px] */}
             <img src="/src/assets/banna.png" alt="Dinajpur Banna" className="w-full h-full  border border-[rgba(255,255,255,.2)] rounded-[16px] block"/>
-            {/* <h3 className="text-white text-[14px] sm:text-[15px] font-semibold mb-[4px]">
-              Dinajpur Banna
-            </h3>
-            <p className="text-[rgba(255,255,255,.7)] text-[11px] sm:text-[12px]">
-              Pure Forest Honey
-            </p>
-            <div className="text-[#ffd166] text-[15px] sm:text-[16px] font-bold mt-[8px]">
-              Tk 2,200
-            </div> */}
+
           </div>
 
           <div className="bg-[rgba(255,255,255,.12)] backdrop-blur-[10px] border border-[rgba(255,255,255,.2)] rounded-[16px]  text-center transition-transform duration-300 cursor-pointer hover:-translate-y-[4px]">
-            {/* <span className="text-[36px] sm:text-[40px] block mb-[8px]">🧈</span> */}
              <img src="/src/assets/mango.webp" alt="Dinajpur Banna" className="w-full h-full  border border-[rgba(255,255,255,.2)] rounded-[16px] block"/>
-            {/* <h3 className="text-white text-[14px] sm:text-[15px] font-semibold mb-[4px]">
-              Gawa Ghee
-            </h3>
-            <p className="text-[rgba(255,255,255,.7)] text-[11px] sm:text-[12px]">
-              গাওয়া ঘি ১কেজি
-            </p>
-            <div className="text-[#ffd166] text-[15px] sm:text-[16px] font-bold mt-[8px]">
-              Tk 1,710
-            </div> */}
           </div>
 
           <div className="bg-[rgba(255,255,255,.12)] backdrop-blur-[10px] border border-[rgba(255,255,255,.2)] rounded-[16px]  text-center transition-transform duration-300 cursor-pointer hover:-translate-y-[4px]">
-            {/* <span className="text-[36px] sm:text-[40px] block mb-[8px]">🌴</span> */}
             <img src="/src/assets/lachu.jpg" alt="Dinajpur Banna" className="w-full h-full  border border-[rgba(255,255,255,.2)] rounded-[16px] block"/>
-            {/* <h3 className="text-white text-[14px] sm:text-[15px] font-semibold mb-[4px]"> */}
-              {/* Ajwa Dates
-            </h3>
-            <p className="text-[rgba(255,255,255,.7)] text-[11px] sm:text-[12px]">
-              Premium Medina
-            </p>
-            <div className="text-[#ffd166] text-[15px] sm:text-[16px] font-bold mt-[8px]">
-              Tk 2,090
-            </div> */}
           </div>
         </div>
       </div>
