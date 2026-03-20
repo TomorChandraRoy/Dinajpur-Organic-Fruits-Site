@@ -1,77 +1,164 @@
+import {
+  FaFacebook,
+  FaInstagram,
+  FaWhatsapp,
+  FaYoutube,
+} from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  return (
-    <footer className="bg-[#1b2d24] text-[rgba(255,255,255,0.72)] pt-14 pb-7 px-6">
-      {/* Footer Grid */}
-      <div className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-9">
+  const links = [
+    { name: "About Us", path: "/about-us" },
+    { name: "Meet the Team", path: "meet-team" },
+    { name: "How to Order", path: "/how-to-order" },
+    { name: "Terms & Condition", path: "/terms-condition" },
+  ];
 
-        {/* Logo & Description */}
-        <div>
-            <Link to="/" className="flex items-center gap-[10px] no-underline shrink-0">
-              <div className="w-11 h-11  rounded-[10px] flex items-center justify-center text-[22px]">
-                <img src="/src/assets/sublogo.png" alt="logo" className="w-full h-full object-cover" />
+  const helpfulLinks = [
+    { name: "Contact", path: "/contact" },
+    { name: "FAQs", path: "/faqs" },
+    { name: "Live Chat", path: "/chat" },
+    { name: "Order Tracking", path: "/order-tracking" },
+  ];
+
+  const legalLinks = [
+    { name: "Returns Policy", path: "/returns-policy" },
+    { name: "Refund Policy", path: "/refund-policy" },
+    { name: "Privacy Policy", path: "/privacy-policy" },
+  ];
+
+  return (
+    <footer className="bg-white">
+      <div className="mx-auto max-w-7xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 mb-5">
+
+          {/* LEFT SIDE */}
+          <div className="flex flex-col lg:items-start md:items-center">
+
+            {/* LOGO */}
+            <div className="flex flex-col items-center md:items-start sm:flex-row gap-3">
+              <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden">
+                <img
+                  src="/src/assets/sublogo.png"
+                  alt="logo"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div>
-                <strong className="block text-[18px] text-white font-['Playfair_Display'] leading-tight">
+
+              <div className="text-center sm:text-left">
+                <strong className="block text-[18px] text-(--green) font-['Playfair_Display'] leading-tight">
                   Dinajpur Organic Fruits
                 </strong>
-                <span className="text-[11px] text-[var(--gray)] leading-tight">বিশুদ্ধতা ও স্বাদের নিশ্চয়তা</span>
+                <span className="text-[11px] text-gray-400 block mt-1">
+                  বিশুদ্ধতা ও স্বাদের নিশ্চয়তা
+                </span>
               </div>
-            </Link>
-          <p className="text-[12.5px] leading-[1.8] mb-4">
-            Your trusted source for safe, healthy, and organic food products delivered across Bangladesh.
-          </p>
-          <p className="text-[12.5px] mb-4"><strong className="text-white">DBID: 437361334</strong></p>
+            </div>
 
-          {/* Social Links */}
-          <div className="flex gap-2.5">
-            <a className="w-8.5 h-8.5 bg-[rgba(255,255,255,0.1)] rounded-lg flex items-center justify-center text-[15px] transition-colors duration-200 cursor-pointer hover:bg-[var(--green)]">📘</a>
-            <a className="w-8.5 h-8.5 bg-[rgba(255,255,255,0.1)] rounded-lg flex items-center justify-center text-[15px] transition-colors duration-200 cursor-pointer hover:bg-[var(--green)]">📸</a>
-            <a className="w-8.5 h-8.5 bg-[rgba(255,255,255,0.1)] rounded-lg flex items-center justify-center text-[15px] transition-colors duration-200 cursor-pointer hover:bg-[var(--green)]">💬</a>
-            <a className="w-8.5 h-8.5 bg-[rgba(255,255,255,0.1)] rounded-lg flex items-center justify-center text-[15px] transition-colors duration-200 cursor-pointer hover:bg-[var(--green)]">▶️</a>
+            {/* DESCRIPTION */}
+            <p className="mt-4 p-3 lg:max-w-xs md:max-w-xl lg:p-0 text-gray-500 mx-auto lg:mx-0">
+              Dinajpur Organic Fruits offers fresh, organic, and chemical-free fruits sourced directly from local farms. We are committed to providing healthy, safe, and naturally delicious produce so you and your family can enjoy the true taste of nature every day.
+            </p>
+
+            {/* SOCIAL ICONS */}
+            <ul className="mt-8 flex justify-center lg:justify-start md:justify-start  gap-6">
+              <li>
+                <a href="#" className="text-gray-700 hover:text-red-500 transition">
+                  <span className="sr-only">YouTube</span>
+                  <FaYoutube className="w-6 h-6" />
+                </a>
+              </li>
+
+              <li>
+                <a href="#" className="text-gray-700 hover:text-pink-500 transition">
+                  <span className="sr-only">Instagram</span>
+                  <FaInstagram className="w-6 h-6" />
+                </a>
+              </li>
+
+              <li>
+                <a href="#" className="text-gray-700 hover:text-blue-600 transition">
+                  <span className="sr-only">Facebook</span>
+                  <FaFacebook className="w-6 h-6" />
+                </a>
+              </li>
+
+              <li>
+                <a href="#" className="text-gray-700 hover:text-green-500 transition">
+                  <span className="sr-only">WhatsApp</span>
+                  <FaWhatsapp className="w-6 h-6" />
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* RIGHT SIDE GRID */}
+          <div className="grid grid-cols-2 gap-8  lg:col-span-2 lg:grid-cols-3 md:grid-cols-3">
+
+            {/* INFO */}
+            <div className="text-center">
+              <p className="font-medium text-gray-900">Information</p>
+              <ul className="mt-6 space-y-4 text-sm">
+                {links.map((item) => (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      onClick={() => window.scrollTo({ top: 0 })}
+                      className="text-gray-700 hover:opacity-75 transition"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* HELPFUL */}
+            <div className="text-center">
+              <p className="font-medium text-gray-900">Helpful Links</p>
+              <ul className="mt-6 space-y-4 text-sm">
+                {helpfulLinks.map((item) => (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      onClick={() => window.scrollTo({ top: 0 })}
+                      className="text-gray-700 hover:opacity-75 transition"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* LEGAL */}
+            <div className="text-center">
+              <p className="font-medium text-gray-900">Legal</p>
+              <ul className="mt-6 space-y-4 text-sm">
+                {legalLinks.map((item) => (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      onClick={() => window.scrollTo({ top: 0 })}
+                      className="text-gray-700 hover:opacity-75 transition"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
           </div>
         </div>
 
-        {/* Company */}
-        <div className="sm:justify-center text-center">
-          <h4 className="text-white text-[13px] font-semibold mb-3 uppercase tracking-wide">Company</h4>
-          <ul className="list-none text-center">
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">About Us</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">Return Policy</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">Refund Policy</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">Privacy Policy</a></li>
-          </ul>
-        </div>
-
-        {/* Quick Help */}
-        <div className="sm:justify-self-start text-center">
-          <h4 className="text-white text-[13px] font-semibold mb-3 uppercase tracking-wide">Quick Help</h4>
-          <ul className="list-none text-center">
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">Customer Care</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">Track Order</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">Place Order</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] hover:text-white cursor-pointer transition-colors">FAQ</a></li>
-          </ul>
-        </div>
-
-        {/* Contact */}
-        <div className="sm:justify-self-start text-center">
-          <h4 className="text-white text-[13px] font-semibold mb-3 uppercase tracking-wide">Contact</h4>
-          <ul className="list-none text-center">
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] cursor-pointer">📞 +880 1321-208940</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] cursor-pointer">☎️ 09642-922922</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] cursor-pointer">📧 support@ghorerbazar.com</a></li>
-            <li className="mb-1.5"><a className="text-[12.5px] text-[rgba(255,255,255,0.6)] cursor-pointer">📍 Dhaka, Bangladesh</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      {/* Footer Bottom */}
-      <div className="max-w-[1280px] mx-auto border-t border-[rgba(255,255,255,0.1)] pt-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2.5 text-[11.5px] text-[rgba(255,255,255,0.35)] text-center sm:text-left">
-        <span>© Dinajpur Organic Fruits 2026 — All Rights Reserved</span>
-        <span>Made with ❤️ for Tomor Roy</span>
+        {/* BOTTOM */}
+        <p className="text-xs text-gray-500 border-t border-gray-100 pt-4 text-center lg:text-start md:text-center ">
+          &copy; 2026. Dinajpur Organic Fruits. All rights reserved.
+        </p>
       </div>
     </footer>
   );
