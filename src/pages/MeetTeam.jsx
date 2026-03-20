@@ -76,5 +76,4 @@ const teamMembers = [
     </div>
   )
 }
-
 export default MeetTeam;

@@ -96,7 +96,7 @@ const RefundPolicy = () => {
 
               <a
                 href="tel:+8801321208940"
-                className="bg-white text-[#1b2d24] px-8 py-3 rounded-full font-bold hover:bg-green-50 transition"
+                className="bg-white text-[#1b2d24] lg:px-8 md:px-8 px-3 py-3 rounded-full font-bold hover:bg-green-50 transition"
               >
                 Contact Support
               </a>

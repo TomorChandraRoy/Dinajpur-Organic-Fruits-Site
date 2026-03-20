@@ -1,9 +1,4 @@
-import {
-  FaFacebook,
-  FaInstagram,
-  FaWhatsapp,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
@@ -16,7 +11,7 @@ const Footer = () => {
   ];
 
   const helpfulLinks = [
-    { name: "Contact", path: "/contact" },
+    { name: "Contact Us", path: "/contact" },
     { name: "FAQs", path: "/faqs" },
     { name: "Live Chat", path: "/chat" },
     { name: "Order Tracking", path: "/order-tracking" },
@@ -27,17 +22,18 @@ const Footer = () => {
     { name: "Refund Policy", path: "/refund-policy" },
     { name: "Privacy Policy", path: "/privacy-policy" },
   ];
+  const phone = "8801863956943";
+  const message = "Hello I want to contact you";
+
+  const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   return (
-    <footer className="bg-white">
+    <footer className="bg-green">
       <div className="mx-auto max-w-7xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
-
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 mb-5">
-
           {/* LEFT SIDE */}
-          <div className="flex flex-col lg:items-start md:items-center">
-
+          <div className="flex flex-col lg:items-start md:items-center text-center">
             {/* LOGO */}
             <div className="flex flex-col items-center md:items-start sm:flex-row gap-3">
               <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden">
@@ -59,35 +55,58 @@ const Footer = () => {
             </div>
 
             {/* DESCRIPTION */}
-            <p className="mt-4 p-3 lg:max-w-xs md:max-w-xl lg:p-0 text-gray-500 mx-auto lg:mx-0">
-              Dinajpur Organic Fruits offers fresh, organic, and chemical-free fruits sourced directly from local farms. We are committed to providing healthy, safe, and naturally delicious produce so you and your family can enjoy the true taste of nature every day.
+            <p className="mt-4 p-3  text-start lg:max-w-[20rem] md:max-w-xl lg:p-0 text-gray-500 mx-auto lg:mx-0">
+              Dinajpur Organic Fruits offers fresh, organic, and chemical-free
+              fruits sourced directly from local farms. We are committed to
+              providing healthy, safe, and naturally delicious produce so you
+              and your family can enjoy the true taste of nature every day.
             </p>
 
             {/* SOCIAL ICONS */}
             <ul className="mt-8 flex justify-center lg:justify-start md:justify-start  gap-6">
               <li>
-                <a href="#" className="text-gray-700 hover:text-red-500 transition">
+                <a
+                  href="https://www.youtube.com/@grameenGanthStudio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-700 hover:text-red-500 transition"
+                >
                   <span className="sr-only">YouTube</span>
                   <FaYoutube className="w-6 h-6" />
                 </a>
               </li>
 
               <li>
-                <a href="#" className="text-gray-700 hover:text-pink-500 transition">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.instagram.com/dinajpurorganicfruits"
+                  className="text-gray-700 hover:text-pink-500 transition"
+                >
                   <span className="sr-only">Instagram</span>
                   <FaInstagram className="w-6 h-6" />
                 </a>
               </li>
 
               <li>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition">
+                <a
+                  href="https://www.facebook.com/dinajpurorganicfruits"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-700 hover:text-blue-600 transition"
+                >
                   <span className="sr-only">Facebook</span>
                   <FaFacebook className="w-6 h-6" />
                 </a>
               </li>
 
               <li>
-                <a href="#" className="text-gray-700 hover:text-green-500 transition">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-700 hover:text-green-500 transition"
+                >
                   <span className="sr-only">WhatsApp</span>
                   <FaWhatsapp className="w-6 h-6" />
                 </a>
@@ -97,9 +116,8 @@ const Footer = () => {
 
           {/* RIGHT SIDE GRID */}
           <div className="grid grid-cols-2 gap-8  lg:col-span-2 lg:grid-cols-3 md:grid-cols-3">
-
             {/* INFO */}
-            <div className="text-center">
+            <div className="text-start">
               <p className="font-medium text-gray-900">Information</p>
               <ul className="mt-6 space-y-4 text-sm">
                 {links.map((item) => (
@@ -117,7 +135,7 @@ const Footer = () => {
             </div>
 
             {/* HELPFUL */}
-            <div className="text-center">
+            <div className="text-start">
               <p className="font-medium text-gray-900">Helpful Links</p>
               <ul className="mt-6 space-y-4 text-sm">
                 {helpfulLinks.map((item) => (
@@ -135,7 +153,7 @@ const Footer = () => {
             </div>
 
             {/* LEGAL */}
-            <div className="text-center">
+            <div className="text-start">
               <p className="font-medium text-gray-900">Legal</p>
               <ul className="mt-6 space-y-4 text-sm">
                 {legalLinks.map((item) => (
@@ -151,7 +169,6 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-
           </div>
         </div>
 

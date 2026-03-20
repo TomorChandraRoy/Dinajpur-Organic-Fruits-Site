@@ -11,6 +11,9 @@ import TermsCondition from "../pages/TermsCondition";
 import HowToOrder from "../pages/HowToOrder";
 import OrderTracking from "../common/OrderTracking";
 import MeetTeam from "../pages/MeetTeam";
+import ContactUs from "../pages/ContactUs";
+import FAQ from "../pages/FAQs";
+import LiveChat from "../pages/LiveChart";
 
 const NavRoutes = () => {
   return (
@@ -26,6 +29,10 @@ const NavRoutes = () => {
           <Route path="/terms-condition" element={<TermsCondition />} />
           <Route path="/meet-team" element={<MeetTeam/>} />
           <Route path="/how-to-order" element={<HowToOrder />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/faqs" element={<FAQ />} />
+          <Route path="/chat" element={<LiveChat />} />
+
           <Route path="/order-tracking" element={<OrderTracking />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/returns-policy" element={<ReturnsPolicy />} />
