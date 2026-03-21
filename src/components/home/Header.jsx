@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../layout/Navbar";
+import Navbar from "../../common/Navbar";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -95,10 +95,10 @@ const Header = () => {
               <button className="bg-[var(--green)] text-white text-[13px] px-4 py-2 rounded-full whitespace-nowrap">
                 Track Order
               </button>
-              <a href="#" className="no-underline text-[var(--dark)] text-[13px] flex flex-col items-center gap-[2px] relative">
+              <Link  to="/signin" className="no-underline text-[var(--dark)] text-[13px] flex flex-col items-center gap-[2px] relative">
                 <span className="text-[20px]">👤</span>
                 <span>Account</span>
-              </a>
+              </Link>
               <a href="#" className="no-underline text-[var(--dark)] text-[13px] flex flex-col items-center gap-[2px] relative">
                 <span className="text-[20px]">🛒</span>
                 <span>Cart</span>

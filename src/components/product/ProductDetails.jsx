@@ -1,14 +1,5 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {  useMemo, useState } from "react";
-import {
-  FacebookIcon,
-  Heart,
-  ShoppingCart,
-  Star,
-  Twitter,
-  TwitterIcon,
-  X,
-} from "lucide-react";
 import banana from "../../assets/banna.png";
 import mango from "../../assets/mango.webp";
 import lychee from "../../assets/lechnu.jpg";
@@ -17,7 +8,10 @@ import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
 import { products } from "../../data/products";
 import SimilarProducts from "./SimilarProducts";
-import StatusHandler from "../../common/StatusHandler";
+import StatusHandler from "../../pages/OrderTracking/StatusHandler";
+import { BiHeart, BiStar, BiX } from "react-icons/bi";
+import { FaFacebook, FaShoppingCart } from "react-icons/fa";
+import { BsTwitter } from "react-icons/bs";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -159,7 +153,7 @@ const ProductDetails = () => {
                 className="absolute top-0 right-0 w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 aria-label="Close"
               >
-                <X className="w-4 h-4 mx-auto" />
+                <BiX className="w-4 h-4 mx-auto" />
               </button>
 
               {/* category Name */}
@@ -175,7 +169,7 @@ const ProductDetails = () => {
               <div className="flex items-center gap-2 text-[12px] text-gray-500 mb-4">
                 <div className="flex items-center gap-1 text-amber-400">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
+                    <BiStar
                       key={i}
                       className="w-3 h-3"
                       fill={
@@ -269,7 +263,7 @@ const ProductDetails = () => {
                   className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-colors"
                   aria-label="Share on Facebook"
                 >
-                  <FacebookIcon className="w-4 h-4" />
+                  <FaFacebook className="w-4 h-4" />
                 </button>
                 <button
                   type="button"
@@ -277,7 +271,7 @@ const ProductDetails = () => {
                   className="w-8 h-8 rounded-full bg-sky-50 text-sky-500 flex items-center justify-center hover:bg-sky-100 transition-colors"
                   aria-label="Share on Twitter"
                 >
-                  <TwitterIcon className="w-4 h-4" />
+                  <BsTwitter className="w-4 h-4" />
                 </button>
               </div>
 
@@ -287,7 +281,7 @@ const ProductDetails = () => {
                   type="button"
                   className="flex-1 bg-emerald-800 text-white text-[13px] font-semibold px-5 py-3 rounded-xl hover:bg-emerald-900 transition-colors inline-flex items-center justify-center gap-2"
                 >
-                  <ShoppingCart className="w-4 h-4" />
+                  <FaShoppingCart className="w-4 h-4" />
                   Add to Cart
                 </button>
                 <button
@@ -295,7 +289,7 @@ const ProductDetails = () => {
                   className=" w-12 h-12 rounded-xl border border-gray-200 text-gray-500 hover:text-gray-700 inline-flex items-center justify-center"
                   aria-label="Add to wishlist"
                 >
-                  <Heart className="w-5 h-5" />
+                  <BiHeart className="w-5 h-5" />
 
                 </button>
               </div>

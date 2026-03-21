@@ -6,6 +6,7 @@ import longan from "../../assets/lachu.jpg";
 import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
 import { products } from "../../data/products";
+import { BiHeart, BiPlus } from "react-icons/bi";
 
 const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
       <h2 className="mb-10  text-gray-900 w-fit mx-auto  text-center border-b-2 border-[#2D6A4F] px-4 py-2  font-medium text-2xl" >
       Similar Products
       </h2>
-
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {items.map((p) => {
@@ -49,7 +49,7 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
                   {p.badge === "hot" ? "HOT" : p.badge === "new" ? "NEW" : "SALE"}
                 </span>
                 <span className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 border border-gray-200 flex items-center justify-center text-gray-600">
-                  ♡
+                  <BiHeart/>
                 </span>
               </div>
 
@@ -72,9 +72,15 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
                       </span>
                     </div>
                   </div>
-                  <span className="bg-emerald-700 text-white text-[11px] font-semibold px-3 py-2 rounded-full">
-                    + Add
-                  </span>
+                  <button
+                      type="button"
+                      className="btn-add bg-[var(--green)] text-white border-0 px-[13px] py-[7px] rounded-full text-[11.5px] font-semibold cursor-pointer transition-all duration-200 hover:bg-[var(--green-dark)]"
+                      // onClick={() => addToCart(p.id, 1)}
+                    >
+                      <span className="flex items-center justify-center gap-1">
+                        <BiPlus className="w-4 h-4" /> Add To Cart
+                      </span>
+                  </button>
                 </div>
               </div>
             </button>

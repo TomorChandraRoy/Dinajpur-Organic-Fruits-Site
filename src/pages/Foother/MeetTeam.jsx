@@ -1,5 +1,5 @@
-import Shuvo from "../assets/shuvo.jpeg";
-import Tomor from "../assets/1.png";
+import Shuvo from "../../assets/shuvo.jpeg";
+import Tomor from "../../assets/1.png";
 
 const MeetTeam = () => {
 const teamMembers = [

@@ -1,22 +1,20 @@
-import AllProducts from "../components/ui/AllProducts";
-import Categories from "../components/ui/Categories";
-import HeroSection from "../components/ui/HeroSection";
-import Trust from "../components/ui/Trust";
-import WeAreDifferent from "../components/ui/WeAreDifferent";
+import AllProducts from "../components/home/AllProducts";
+import Categories from "../components/home/Categories";
+import HeroSection from "../components/home/HeroSection";
+import Trust from "../components/home/Trust";
+import WeAreDifferent from "../components/home/WeAreDifferent";
 import { weAreDifferent } from "../data/WeAreDifferent";
-
-console.log(weAreDifferent);
 
 const Home = () => {
   return (
     <>
       <HeroSection />
       <Trust />
-      <Categories/>
+      <Categories />
       <AllProducts />
       <WeAreDifferent data={weAreDifferent} />
     </>
-  )
-}
+  );
+};
 
 export default Home;

@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Heart, Plus } from "lucide-react";
 import banana from "../../assets/banna.png";
 import mango from "../../assets/mango.webp";
 import lychee from "../../assets/lechnu.jpg";
@@ -7,7 +6,7 @@ import longan from "../../assets/lachu.jpg";
 import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
 import { products } from "../../data/products";
-
+import { BiHeart, BiPlus } from "react-icons/bi";
 
 
 const AllProducts = () => {
@@ -80,7 +79,7 @@ const AllProducts = () => {
                       toggleWish(p.id);
                     }}
                   >
-                    <Heart className="w-4 h-4 text-gray-600" />
+                    <BiHeart className="w-4 h-4 text-gray-600" />
                   </button>
                   <img
                     src={productImages[p.id % productImages.length]}
@@ -119,7 +118,7 @@ const AllProducts = () => {
                       onClick={() => addToCart(p.id, 1)}
                     >
                       <span className="flex items-center justify-center gap-1">
-                        <Plus className="w-4 h-4" /> Add
+                        <BiPlus className="w-4 h-4" /> Add To Cart
                       </span>
                     </button>
                   </div>

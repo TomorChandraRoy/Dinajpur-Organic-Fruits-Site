@@ -1,7 +1,7 @@
-import Footer from "./components/layout/Footer";
-import Header from "./components/ui/Header";
-import ToolBar from "./components/layout/ToolBar";
-import NavRoutes from "./routes/NavRoutes";
+import Footer from "./common/Footer";
+import Header from "./components/home/Header";
+import ToolBar from "./components/home/ToolBar";
+import AllRoutes from "./routes/AllRoutes";
 import ScrollToTop from "./services/ScrollToTop";
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
       <ScrollToTop />
       <ToolBar />
       <Header />
-      <NavRoutes />
+      <AllRoutes />
       <Footer />
     </>
   );
