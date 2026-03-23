@@ -1,5 +1,6 @@
-
-import { Leaf, ShieldCheck, Truck, Users } from 'lucide-react';
+import { BiUser } from "react-icons/bi";
+import { BsShieldCheck, BsTruck } from "react-icons/bs";
+import { LuEar } from "react-icons/lu";
 
 const AboutUs = () => {
   return (
@@ -49,28 +50,28 @@ const AboutUs = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="flex flex-col items-center">
               <div className="w-14 h-14 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-4">
-                <ShieldCheck size={28} />
+                <BsShieldCheck size={28} />
               </div>
               <h3 className="font-bold text-xl text-[#1b2d24]">100% Organic</h3>
               <p className="text-sm text-gray-500">Certified Purity</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-14 h-14 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-4">
-                <Truck size={28} />
+                <BsTruck size={28} />
               </div>
               <h3 className="font-bold text-xl text-[#1b2d24]">Fast Delivery</h3>
               <p className="text-sm text-gray-500">Across Bangladesh</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-14 h-14 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-4">
-                <Leaf size={28} />
+                <LuEar size={28} />
               </div>
               <h3 className="font-bold text-xl text-[#1b2d24]">Natural Growth</h3>
               <p className="text-sm text-gray-500">No Chemicals</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="w-14 h-14 bg-green-100 text-green-700 rounded-full flex items-center justify-center mb-4">
-                <Users size={28} />
+                <BiUser size={28} />
               </div>
               <h3 className="font-bold text-xl text-[#1b2d24]">5k+ Clients</h3>
               <p className="text-sm text-gray-500">Happy Families</p>

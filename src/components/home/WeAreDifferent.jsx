@@ -1,11 +1,11 @@
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { Award, MapPin, Truck, PlayCircle, Package } from "lucide-react";
 
 // Swiper CSS ইমপোর্ট (অবশ্যই লাগবে)
 import "swiper/css";
 import "swiper/css/pagination";
+import { BiAward, BiMapPin, BiPackage } from "react-icons/bi";
+import { BsTruck } from "react-icons/bs";
 
 const swiperCustomStyles = `
   .swiper-pagination-bullet { background: #a7f3d0; opacity: 1; }
@@ -148,10 +148,10 @@ const WeAreDifferent = ({ data }) => {
                 className="bg-[#f0f9f6] p-3 rounded-2xl text-center border border-emerald-100"
               >
                 <div className="mb-3 flex justify-center text-emerald-700">
-                  {index === 0 && <Award size={28} />}
-                  {index === 1 && <MapPin size={28} />}
-                  {index === 2 && <Package size={28} />}
-                  {index === 3 && <Truck size={28} />}
+                  {index === 0 && <BiAward size={28} />}
+                  {index === 1 && <BiMapPin size={28} />}
+                  {index === 2 && <BiPackage size={28} />}
+                  {index === 3 && <BsTruck size={28} />}
                 </div>
                 <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
                 <p className="text-xs text-emerald-700 font-bold uppercase tracking-wider">
