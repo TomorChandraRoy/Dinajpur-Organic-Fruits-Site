@@ -7,6 +7,7 @@ import SignUp from "../../pages/Auth/SignUp";
 import OrderTracking from "../../pages/OrderTracking/OrderTracking";
 import ProductDetails from "../../components/product/ProductDetails";
 import SimilarProductsPage from "../../pages/SimilarProducts/SimilarProducts";
+import CategoryShop from "../../pages/CategoryShop";
 import AboutUs from "../../pages/Foother/AboutUs";
 import RefundPolicy from "../../pages/Foother/RefundPolicy";
 import PrivacyPolicy from "../../pages/Foother/PrivacyPolicy";
@@ -53,6 +54,10 @@ export const AllRoutes = createBrowserRouter([
       {
         path: "/product/:id/similar",
         element: <SimilarProductsPage></SimilarProductsPage>,
+      },
+      {
+        path: "/shop/:categoryName",
+        element: <CategoryShop></CategoryShop>,
       },
       {
         path: "/oil",

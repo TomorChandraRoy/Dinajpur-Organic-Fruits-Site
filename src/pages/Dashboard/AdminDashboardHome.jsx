@@ -1,11 +1,16 @@
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { BiPackage, BiX, BiHistory, BiLayout, BiLogOut, BiPlus, BiTrash, BiEditAlt, BiUser } from "react-icons/bi";
 import { FaDolly } from "react-icons/fa";
 import { FiUsers, FiBox } from "react-icons/fi";
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 import { IoSearchSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { AiOutlineHome } from "react-icons/ai";
 
 export default function AdminDashboard() {
+  const { logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("users");
   const [perPage, setPerPage] = useState(5);
   const [page, setPage] = useState(1);
@@ -56,6 +61,15 @@ export default function AdminDashboard() {
   const updateStatus = (orderId, newStatus) => {
     setAllOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o)));
     setSelectedOrder(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate("/signin");
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
   };
 
   const handlePrev = () => {
@@ -119,6 +133,7 @@ export default function AdminDashboard() {
         <div className="hidden md:block mb-10 px-4 mt-4 text-2xl font-black text-green-600 italic uppercase tracking-tighter">ADMIN Panel</div>
         <nav className="space-y-2 flex-1">
           {[
+            { id: "home", label: "Home", icon: <AiOutlineHome /> },
             { id: "users", label: "Users", icon: <FiUsers /> },
             { id: "orders", label: "Orders", icon: <BiLayout /> },
             { id: "products", label: "Products", icon: <FiBox /> },
@@ -127,6 +142,10 @@ export default function AdminDashboard() {
             <button
               key={tab.id}
               onClick={() => {
+                if (tab.id === "home") {
+                  navigate("/");
+                  return;
+                }
                 setActiveTab(tab.id);
                 setPage(1);
                 setSearchQuery("");
@@ -138,7 +157,7 @@ export default function AdminDashboard() {
             </button>
           ))}
         </nav>
-        <button className="flex items-center justify-center md:justify-start gap-3 px-2 sm:px-3 md:px-4 py-3 text-red-400 font-bold hover:bg-red-50 rounded-2xl transition-all mb-4">
+        <button onClick={handleLogout} className="flex items-center justify-center md:justify-start gap-3 px-2 sm:px-3 md:px-4 py-3 text-red-400 font-bold hover:bg-red-50 rounded-2xl transition-all mb-4">
           <BiLogOut size={20} className="shrink-0" />
           <span className="hidden md:block">Logout</span>
         </button>
