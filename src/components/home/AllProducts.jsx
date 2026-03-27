@@ -5,9 +5,8 @@ import lychee from "../../assets/lechnu.jpg";
 import longan from "../../assets/lachu.jpg";
 import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
-import { products } from "../../data/products";
+import { products } from "../../utils/data/products";
 import { BiHeart, BiPlus } from "react-icons/bi";
-
 
 const AllProducts = () => {
   const navigate = useNavigate();
@@ -65,10 +64,14 @@ const AllProducts = () => {
                 >
                   <span
                     className={`${getBadgeClass(
-                      p.badge
+                      p.badge,
                     )} absolute top-[10px] left-[10px] text-white text-[9.5px] font-bold px-[7px] py-[2px] rounded-[4px] uppercase`}
                   >
-                    {p.badge === "hot" ? "HOT" : p.badge === "new" ? "NEW" : "SALE"}
+                    {p.badge === "hot"
+                      ? "HOT"
+                      : p.badge === "new"
+                        ? "NEW"
+                        : "SALE"}
                   </span>
                   <button
                     type="button"

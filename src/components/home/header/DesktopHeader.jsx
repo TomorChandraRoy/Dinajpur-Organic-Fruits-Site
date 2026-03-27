@@ -5,9 +5,8 @@ import { useMemo } from "react";
 
 
 const DesktopHeader = ({user, dropdownRef, isOpen,toggleDropdown,handleSignOut,closeDropdown }) =>{
-
   const photo = useMemo(() => user?.photoURL || defaultUserSvg, [user?.photoURL]);
-  
+
   return (
 
       <header className="hidden lg:block bg-white border-b border-[var(--border)] shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
@@ -69,7 +68,7 @@ const DesktopHeader = ({user, dropdownRef, isOpen,toggleDropdown,handleSignOut,c
                       aria-haspopup="true"
                       aria-expanded={isOpen}
                     >
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-orange-500 hover:border-orange-600 transition-all flex items-center justify-center bg-gray-200">
+                      <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden border-2 border-green-500 hover:border-green-600 transition-all flex items-center justify-center bg-gray-200">
                         <img
                           alt={user?.displayName || "User"}
                           src={photo}
@@ -82,7 +81,7 @@ const DesktopHeader = ({user, dropdownRef, isOpen,toggleDropdown,handleSignOut,c
 
                     {/* ড্রপডাউন মেনু */}
                     {isOpen && (
-                      <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] py-2 animate-in fade-in zoom-in duration-200">
+                      <div className="absolute -right-20 mt-2 w-52 bg-white border border-gray-200 rounded-xl shadow-2xl z-[100] py-2 animate-in fade-in zoom-in duration-200">
                         <div className="px-4 py-3 border-b border-gray-100">
                           <p className="text-sm font-semibold text-gray-900 truncate">
                             {user?.displayName || "Guest User"}
@@ -95,20 +94,11 @@ const DesktopHeader = ({user, dropdownRef, isOpen,toggleDropdown,handleSignOut,c
                         <ul className="py-1">
                           <li>
                             <Link
-                              to="/profile"
+                              to="/dashboard"
                               onClick={closeDropdown}
                               className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                             >
-                              My Profile
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
-                              to="/settings"
-                              onClick={closeDropdown}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600"
-                            >
-                              Settings
+                              Dashboard
                             </Link>
                           </li>
                           <li className="border-t border-gray-100 mt-1">

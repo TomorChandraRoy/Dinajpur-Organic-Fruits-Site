@@ -5,17 +5,24 @@ import { BeatLoader } from "react-spinners";
 import { AuthContext } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
-import useAxiosPublic from "../../hooks/axiosPublic";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SignIn = () => {
-  const { signIn, resetPassword, loading, signInWithGoogle } = useContext(AuthContext);
+  const { signIn, resetPassword, loading, signInWithGoogle } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const loact = useLocation();
   const axiosPublic = useAxiosPublic();
   const from = loact?.state?.from?.pathname || "/";
 
   // react-hook-form setup
-  const { register, handleSubmit, reset, getValues, formState: { errors }} = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
   const onSubmit = async (data) => {
     try {
       const result = await signIn(data.email, data.password, data.rememberMe);
@@ -36,7 +43,7 @@ const SignIn = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+ //Password Reset
   const handleResetPassword = async () => {
     const email = getValues("email"); // react-hook-form এর watch ব্যবহার করে ইমেইল নিন
     if (!email) {
@@ -190,7 +197,7 @@ const SignIn = () => {
                 <button
                   type="button"
                   onClick={handleResetPassword}
-                  className="font-medium text-orange-600 hover:text-orange-500"
+                  className="font-medium cursor-pointer text-orange-600 hover:text-orange-500"
                 >
                   পাসওয়ার্ড ভুলে গেছেন?
                 </button>
@@ -199,7 +206,7 @@ const SignIn = () => {
 
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
+              className="w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
             >
               {loading ? <BeatLoader color="#fff" size={8} /> : "SignIn"}
             </button>
@@ -217,10 +224,11 @@ const SignIn = () => {
               </div>
             </div>
 
-            <div className="mt-6 cursor-pointer ">
+            <div className="mt-6">
               <button
+                type="button"
                 onClick={signUpWithGoogle}
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="w-full inline-flex cursor-pointer justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <img
                   className="h-5 w-5 mr-2"

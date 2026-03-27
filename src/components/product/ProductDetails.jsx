@@ -1,12 +1,12 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import {  useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import banana from "../../assets/banna.png";
 import mango from "../../assets/mango.webp";
 import lychee from "../../assets/lechnu.jpg";
 import longan from "../../assets/lachu.jpg";
 import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
-import { products } from "../../data/products";
+import { products } from "../../utils/data/products";
 import SimilarProducts from "./SimilarProducts";
 import StatusHandler from "../../pages/OrderTracking/StatusHandler";
 import { BiHeart, BiStar, BiX } from "react-icons/bi";
@@ -20,7 +20,7 @@ const ProductDetails = () => {
   const product = products.find((p) => String(p.id) === String(id));
 
   // ৪. প্রোডাক্ট ইমেজ সেট করা
-  const productImages = [mango, banana, lychee, longan, sublogo, mangoo,];
+  const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
   const detailImages = Array.from({ length: 4 }, (_, i) => {
     return productImages[(Number(id) + i) % productImages.length];
   });
@@ -29,7 +29,11 @@ const ProductDetails = () => {
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
   const [reviews, setReviews] = useState([]);
-  const [reviewForm, setReviewForm] = useState({name: "",rating: 5, text: ""});
+  const [reviewForm, setReviewForm] = useState({
+    name: "",
+    rating: 5,
+    text: "",
+  });
   const [weight, setWeight] = useState("5kg");
 
   ///social share
@@ -50,7 +54,11 @@ const ProductDetails = () => {
     }
 
     // পপ-আপ উইন্ডোতে ওপেন করার জন্য
-    window.open(shareLink, "_blank", "width=600,height=400,noopener,noreferrer");
+    window.open(
+      shareLink,
+      "_blank",
+      "width=600,height=400,noopener,noreferrer",
+    );
   };
 
   const { price, orig, discountPercent } = useMemo(() => {
@@ -65,7 +73,6 @@ const ProductDetails = () => {
     return { price: nextPrice, orig: nextOrig, discountPercent: nextDiscount };
   }, [product, weight]);
 
-
   const [prevId, setPrevId] = useState(id);
 
   // যদি ইউজার নতুন কোনো প্রোডাক্টে যায় (id চেঞ্জ হয়),
@@ -75,8 +82,7 @@ const ProductDetails = () => {
     setActiveImage(detailImages[0]);
   }
 
-
-    /* Data fetching API*/
+  /* Data fetching API*/
   // const [products, setProduct] = useState(null); // প্রোডাক্ট ডাটা রাখার জন্য
   // const [loading, setLoading] = useState(true); // লোডিং স্টেট (শুরুতে true থাকবে)
 
@@ -290,7 +296,6 @@ const ProductDetails = () => {
                   aria-label="Add to wishlist"
                 >
                   <BiHeart className="w-5 h-5" />
-
                 </button>
               </div>
             </div>
@@ -412,7 +417,10 @@ const ProductDetails = () => {
           </div>
           {/* Similar Products Section */}
           <div className="px-6 pb-8">
-            <SimilarProducts currentProductId={product.id} category={product.cat} />
+            <SimilarProducts
+              currentProductId={product.id}
+              category={product.cat}
+            />
           </div>
         </div>
       </section>

@@ -1,8 +1,7 @@
-
-import farmImage from '../assets/1.png'; // ইমেজে ১-এ দেখানো বড় ইমেজ
-import mangoGarden from '../assets/1.webp'; // ছোট ইমেজ
-import sortedMangoes from '../assets/3.webp'; // ছোট ইমেজ
-import productPackage from '../assets/4.webp'; // ছোট ইমেজ
+import farmImage from '../../assets/1.png';
+import mangoGarden from '../../assets/1.webp';
+import sortedMangoes from '../../assets/3.webp';
+import productPackage from '../../assets/4.webp';
 
 export const weAreDifferent = {
   hero: {

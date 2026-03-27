@@ -1,44 +1,22 @@
-// import { useContext, useEffect, useRef, useState } from "react";
-// import { Link,  } from "react-router-dom";
 import Navbar from "../../../common/Navbar";
-// import { AuthContext } from "../../context/AuthContext";
-// import defaultUserSvg from "../../assets/user-circles.svg";
-// import { FaUserCircle } from "react-icons/fa";
 import ToolBar from "../ToolBar";
 import DesktopHeader from "./DesktopHeader";
 import useHeader from "../../../hooks/useHeader";
 import MobileHeader from "./MobileHeader";
 const Header = () => {
+  const {
+    user,
+    isOpen,
+    openMenu,
+    menuOpen,
+    closeMenu,
+    mobileDropdownRef,
+    desktopDropdownRef,
+    toggleDropdown,
+    closeDropdown,
+    handleSignOut,
+  } = useHeader();
 
-    const { user, isOpen, openMenu, menuOpen,closeMenu, dropdownRef, toggleDropdown, closeDropdown, handleSignOut} = useHeader();
-  // const [menuOpen, setMenuOpen] = useState(false);
-  // const { user, logOut } = useContext(AuthContext);
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const dropdownRef = useRef(null);
-  // const navigate = useNavigate();
-
-  // ১. ড্রপডাউনের বাইরে ক্লিক করলে এটি বন্ধ করার লজিক
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
-
-  // const handleSignOut = async () => {
-  //   try {
-  //     await logOut();
-  //     setIsOpen(false);
-  //     navigate("/signin");
-  //   } catch (error) {
-  //     console.error("Logout Error:", error);
-  //   }
-  // };
-//menuOpen, openMenu, closeMenu, user, dropdownRef, toggleDropdown, isOpen, handleSignOut, closeDropdown
   return (
     <>
     <ToolBar/>
@@ -49,7 +27,7 @@ const Header = () => {
         user={user}
         menuOpen={menuOpen}
         closeMenu={closeMenu}
-        dropdownRef={dropdownRef}
+        dropdownRef={mobileDropdownRef}
         toggleDropdown={toggleDropdown}
         isOpen={isOpen}
         handleSignOut={handleSignOut}
@@ -57,12 +35,12 @@ const Header = () => {
         />
         {/* Desktop Header */}
         <DesktopHeader
-          user={user}
+            user={user}
             isOpen={isOpen}
-            dropdownRef={dropdownRef}
+            dropdownRef={desktopDropdownRef}
             toggleDropdown={toggleDropdown}
             closeDropdown={closeDropdown}
-          handleSignOut={handleSignOut}
+            handleSignOut={handleSignOut}
         />
         {/* Navbar */}
         <div className="hidden lg:block">

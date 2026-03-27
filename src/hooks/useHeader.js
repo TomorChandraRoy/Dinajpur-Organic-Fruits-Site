@@ -4,10 +4,13 @@ import { AuthContext } from "../context/AuthContext";
 
 const useHeader = () => {
   const { user, logOut } = useContext(AuthContext);
+
+
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const dropdownRef = useRef(null);
+  const mobileDropdownRef = useRef(null);
+  const desktopDropdownRef = useRef(null);
   const navigate = useNavigate();
 
   // dropdown toggle
@@ -21,7 +24,10 @@ const useHeader = () => {
   // click outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      const insideMobile = mobileDropdownRef.current?.contains(e.target);
+      const insideDesktop = desktopDropdownRef.current?.contains(e.target);
+
+      if (!insideMobile && !insideDesktop) {
         setIsOpen(false);
       }
     };
@@ -46,7 +52,8 @@ const useHeader = () => {
     user,
     isOpen,
     menuOpen,
-    dropdownRef,
+    mobileDropdownRef,
+    desktopDropdownRef,
     toggleDropdown,
     closeDropdown,
     openMenu,
