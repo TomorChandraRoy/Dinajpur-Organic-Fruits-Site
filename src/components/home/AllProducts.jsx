@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banana from "../../assets/banna.png";
 import mango from "../../assets/mango.webp";
@@ -6,17 +7,15 @@ import longan from "../../assets/lachu.jpg";
 import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
 import { products } from "../../utils/data/products";
-import { BiHeart, BiPlus } from "react-icons/bi";
+import { BiHeart, BiPlus, BiCheck } from "react-icons/bi";
+import { useCart } from "../../context/CartContext";
 
 const AllProducts = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const getBadgeClass = (badge) => {
-    if (badge === "hot") return "badge badge-hot bg-[var(--red)]";
-    if (badge === "new") return "badge badge-new bg-[var(--green)]";
-    return "badge badge-sale bg-[var(--amber)]";
-  };
+  const { addToCart } = useCart();
+  const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
+  const [notification, setNotification] = useState(false);
 
   const openModal = (id) => {
     navigate(`/product/${id}`, { state: { from: location.pathname } });
@@ -26,11 +25,13 @@ const AllProducts = () => {
     console.log("toggleWish", id);
   };
 
-  const addToCart = (id, qty) => {
-    console.log("addToCart", id, qty);
+  const handleAddToCart = (e, product) => {
+    e.stopPropagation();
+    const productImage = productImages[product.id % productImages.length];
+    addToCart({ ...product, image: productImage });
+    setNotification(true);
+    setTimeout(() => setNotification(false), 2000);
   };
-
-  const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
 
   return (
     <section className="py-14 px-6 bg-gray-50">
@@ -49,88 +50,98 @@ const AllProducts = () => {
           </p>
         </div>
 
-        <div className="prod-grid grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-[18px]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((p) => {
-            const disc = Math.round(((p.orig - p.price) / p.orig) * 100);
+            const discount = Math.round(((p.orig - p.price) / p.orig) * 100);
             return (
-              <div
+              <article
                 key={p.id}
-                className="prod-card bg-white border-[1.5px] border-[var(--border)] rounded-[14px] overflow-hidden transition-all duration-200 hover:shadow-[0_10px_32px_rgba(0,0,0,0.1)] hover:-translate-y-1"
+                className="overflow-hidden rounded-2xl border border-[#d9d4c8] bg-white shadow-[0_10px_24px_rgba(17,24,39,0.04)] transition duration-200"
               >
                 <div
-                  className="prod-img relative bg-[var(--green-pale)] aspect-square flex items-center justify-center text-[58px] cursor-pointer"
-                  style={p.bg ? { background: p.bg } : undefined}
+                  className="relative aspect-[0.96] cursor-pointer overflow-hidden"
+                  style={{ background: p.bg || "#f4f8f3" }}
                   onClick={() => openModal(p.id)}
                 >
                   <span
-                    className={`${getBadgeClass(
-                      p.badge,
-                    )} absolute top-[10px] left-[10px] text-white text-[9.5px] font-bold px-[7px] py-[2px] rounded-[4px] uppercase`}
+                    className={`absolute left-3 top-3 z-10 rounded-md px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white ${
+                      p.badge === "hot"
+                        ? "bg-red-500"
+                        : p.badge === "new"
+                          ? "bg-green-600"
+                          : "bg-orange-500"
+                    }`}
                   >
-                    {p.badge === "hot"
-                      ? "HOT"
-                      : p.badge === "new"
-                        ? "NEW"
-                        : "SALE"}
+                    {p.badge}
                   </span>
                   <button
                     type="button"
-                    className="wish-btn absolute top-[10px] right-[10px] w-[30px] h-[30px] bg-white rounded-full flex items-center justify-center text-[14px] border-0 cursor-pointer shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-transform hover:scale-[1.18]"
-                    id={`wish-${p.id}`}
+                    className="cursor-pointer absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-600 shadow-sm transition hover:scale-105"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleWish(p.id);
                     }}
                   >
-                    <BiHeart className="w-4 h-4 text-gray-600" />
+                    <BiHeart className="h-4 w-4" />
                   </button>
                   <img
                     src={productImages[p.id % productImages.length]}
                     alt={p.name}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition duration-300 hover:scale-105"
                     loading="lazy"
                   />
                 </div>
-                <div className="prod-info px-[14px] py-[13px]">
-                  <div className="cat-label text-[10px] text-[var(--green)] font-semibold uppercase tracking-[0.5px] mb-[3px]">
+                <div className="p-4">
+                  <p className="mb-1 text-[10px] font-extrabold uppercase text-green-700">
                     {p.cat}
-                  </div>
+                  </p>
                   <h3
-                    className="text-[13px] font-semibold mb-[5px] leading-[1.35] cursor-pointer hover:text-[var(--green)]"
+                    className="mb-1 cursor-pointer text-sm font-semibold leading-5 text-gray-900 transition hover:text-green-700"
                     onClick={() => openModal(p.id)}
                   >
                     {p.name}
                   </h3>
-                  <div className="price-row flex items-center justify-between">
+                  <div className="mb-3 flex items-end justify-between gap-3">
                     <div>
-                      <div className="price-sale text-[16px] font-bold text-[var(--green)]">
+                      <p className="text-lg font-extrabold text-green-700">
                         Tk {p.price.toLocaleString()}
-                      </div>
-                      <div className="flex items-center gap-[6px]">
-                        <span className="price-orig text-[11px] text-[var(--gray)] line-through">
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400 line-through">
                           Tk {p.orig.toLocaleString()}
                         </span>
-                        <span className="text-[10px] bg-[#dcfce7] text-[#15803d] px-[5px] py-[1px] rounded-[4px] font-bold">
-                          {disc}% off
+                        <span className="rounded bg-green-100 px-1.5 py-0.5 text-[10px] font-bold text-green-700">
+                          {discount}% off
                         </span>
                       </div>
                     </div>
                     <button
                       type="button"
-                      className="btn-add bg-[var(--green)] text-white border-0 px-[13px] py-[7px] rounded-full text-[11.5px] font-semibold cursor-pointer transition-all duration-200 hover:bg-[var(--green-dark)]"
-                      onClick={() => addToCart(p.id, 1)}
+                      className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg bg-green-700 px-4 py-2 text-xs font-bold text-white transition hover:bg-green-800"
+                      onClick={(e) => handleAddToCart(e, p)}
                     >
-                      <span className="flex items-center justify-center gap-1">
-                        <BiPlus className="w-4 h-4" /> Add To Cart
-                      </span>
+                      <BiPlus className="text-sm" />
+                      Add To Cart
                     </button>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
       </div>
+
+      {/* Notification Popup */}
+      {notification && (
+        <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="bg-emerald-700 text-white px-3 py-2 rounded-lg shadow-2xl flex items-center justify-center gap-1 animate-in fade-in slide-in-from-right duration-300 max-w-md">
+            <BiCheck className="text-4xl font-bold flex-shrink-0" />
+            <p className="text-base font-semibold text-white">
+              Added to cart successfully
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

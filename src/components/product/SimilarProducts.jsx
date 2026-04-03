@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banana from "../../assets/banna.png";
 import mango from "../../assets/mango.webp";
@@ -6,12 +7,15 @@ import longan from "../../assets/lachu.jpg";
 import sublogo from "../../assets/sublogo.png";
 import mangoo from "../../assets/mangoo.jpg";
 import { products } from "../../utils/data/products";
-import { BiHeart, BiPlus } from "react-icons/bi";
+import { BiHeart, BiPlus, BiCheck } from "react-icons/bi";
+import { useCart } from "../../context/CartContext";
 
 const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
+  const { addToCart } = useCart();
+  const [notification, setNotification] = useState(false);
 
   const items = products
     .filter((p) => p.cat === category && p.id !== currentProductId)
@@ -29,71 +33,108 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
         {items.map((p) => {
           const discount = Math.round(((p.orig - p.price) / p.orig) * 100);
           return (
-            <button
+            <article
               key={p.id}
-              type="button"
-              onClick={() =>
-                navigate(`/product/${p.id}`, {
-                  state: { from: location.pathname },
-                })
-              }
-              className="text-left rounded-2xl border border-gray-200 bg-white overflow-hidden hover:shadow-[0_12px_26px_rgba(0,0,0,0.10)] transition"
+              className="overflow-hidden rounded-2xl border border-[#d9d4c8] bg-white shadow-[0_10px_24px_rgba(17,24,39,0.04)] transition duration-200"
             >
-              <div className="relative">
+              <div
+                className="relative aspect-[0.96] cursor-pointer overflow-hidden"
+                style={{ background: p.bg || "#f4f8f3" }}
+                onClick={() =>
+                  navigate(`/product/${p.id}`, {
+                    state: { from: location.pathname },
+                  })
+                }
+              >
+                <span
+                  className={`absolute left-3 top-3 z-10 rounded-md px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white ${
+                    p.badge === "hot"
+                      ? "bg-red-500"
+                      : p.badge === "new"
+                        ? "bg-green-600"
+                        : "bg-orange-500"
+                  }`}
+                >
+                  {p.badge}
+                </span>
+                <button
+                  type="button"
+                  className="cursor-pointer absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-600 shadow-sm transition hover:scale-105"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <BiHeart className="h-4 w-4" />
+                </button>
                 <img
                   src={productImages[p.id % productImages.length]}
                   alt={p.name}
-                  className="w-full h-[180px] object-cover"
+                  className="h-full w-full object-cover transition duration-300 hover:scale-105"
                   loading="lazy"
                 />
-                <span className="absolute top-3 left-3 bg-amber-500 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
-                  {p.badge === "hot"
-                    ? "HOT"
-                    : p.badge === "new"
-                      ? "NEW"
-                      : "SALE"}
-                </span>
-                <span className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 border border-gray-200 flex items-center justify-center text-gray-600">
-                  <BiHeart />
-                </span>
               </div>
 
               <div className="p-4">
-                <div className="text-[10px] uppercase tracking-wide text-emerald-700 font-semibold mb-1">
+                <p className="mb-1 text-[10px] font-extrabold uppercase text-green-700">
                   {p.cat}
-                </div>
-                <h3 className="text-[13px] font-semibold text-gray-900 line-clamp-2 mb-3">
+                </p>
+                <h3
+                  className="mb-1 cursor-pointer text-sm font-semibold leading-5 text-gray-900 transition hover:text-green-700"
+                  onClick={() =>
+                    navigate(`/product/${p.id}`, {
+                      state: { from: location.pathname },
+                    })
+                  }
+                >
                   {p.name}
                 </h3>
-                <div className="flex items-center justify-between">
+                <div className="mb-3 flex items-end justify-between gap-3">
                   <div>
-                    <div className="text-[13px] font-semibold text-emerald-700">
+                    <p className="text-lg font-extrabold text-green-700">
                       Tk {p.price.toLocaleString()}
-                    </div>
-                    <div className="flex items-center gap-2 text-[10px] text-gray-400">
-                      <span className="line-through">
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400 line-through">
                         Tk {p.orig.toLocaleString()}
                       </span>
-                      <span className="bg-emerald-50 text-emerald-700 px-1.5 py-[1px] rounded-full font-semibold">
+                      <span className="rounded bg-green-100 px-1.5 py-0.5 text-[10px] font-bold text-green-700">
                         {discount}% off
                       </span>
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="btn-add bg-[var(--green)] text-white border-0 px-[13px] py-[7px] rounded-full text-[11.5px] font-semibold cursor-pointer transition-all duration-200 hover:bg-[var(--green-dark)]"
-                    // onClick={() => addToCart(p.id, 1)}
+                    className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg bg-green-700 px-4 py-2 text-xs font-bold text-white transition hover:bg-green-800"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const productImage =
+                        productImages[p.id % productImages.length];
+                      addToCart({ ...p, image: productImage });
+                      setNotification(true);
+                      setTimeout(() => setNotification(false), 2000);
+                    }}
                   >
-                    <span className="flex items-center justify-center gap-1">
-                      <BiPlus className="w-4 h-4" /> Add To Cart
-                    </span>
+                    <BiPlus className="text-sm" />
+                    Add To Cart
                   </button>
                 </div>
               </div>
-            </button>
+            </article>
           );
         })}
       </div>
+
+      {/* Notification Popup */}
+      {notification && (
+        <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="bg-emerald-700 text-white px-3 py-2 rounded-lg shadow-2xl flex items-center justify-center gap-1 animate-in fade-in slide-in-from-right duration-300 max-w-md">
+            <BiCheck className="text-4xl font-bold flex-shrink-0" />
+            <p className="text-base font-semibold text-white">
+              Added to cart successfully
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

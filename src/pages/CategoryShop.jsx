@@ -21,15 +21,15 @@ import { products } from "../utils/data/products";
 const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
 
 const categoryVisuals = {
-  Honey: { image: sublogo },
-  Ghee: { image: mango },
-  Dates: { image: sublogo },
-  Oil: { image: banana },
-  Masala: { image: longan },
-  Nuts: { image: lychee },
-  Tea: { image: banana },
-  Honeycomb: { image: mango },
-  Pickle: { image: longan },
+  Lychee: { image: lychee },
+  Banana: { image: banana },
+  Mango: { image: mango },
+  Papaya: { image: mangoo },
+  Jujube: { image: longan },
+  Shidol: { image: sublogo },
+  "Beaten Rice": { image: banana },
+  Papad: { image: sublogo },
+  "Sugondhi Rice": { image: mango },
 };
 
 const CategoryShop = () => {

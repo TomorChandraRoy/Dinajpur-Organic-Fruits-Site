@@ -8,10 +8,11 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
+      const qtyToAdd = product.qty || 1;
 
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+          item.id === product.id ? { ...item, qty: item.qty + qtyToAdd } : item,
         );
       }
 
@@ -21,7 +22,7 @@ export const CartProvider = ({ children }) => {
           id: product.id,
           name: product.name,
           price: product.price,
-          qty: 1,
+          qty: qtyToAdd,
           image: product.image,
         },
       ];

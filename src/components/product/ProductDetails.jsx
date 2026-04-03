@@ -9,9 +9,18 @@ import mangoo from "../../assets/mangoo.jpg";
 import { products } from "../../utils/data/products";
 import SimilarProducts from "./SimilarProducts";
 import StatusHandler from "../../pages/OrderTracking/StatusHandler";
-import { BiHeart, BiStar, BiX } from "react-icons/bi";
+import { BiHeart, BiStar, BiX, BiCheck } from "react-icons/bi";
 import { FaFacebook, FaShoppingCart } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
+import { useCart } from "../../context/CartContext";
+
+const ratingLabels = {
+  5: "Perfect",
+  4: "Good",
+  3: "Average",
+  2: "Not bad",
+  1: "Very poor",
+};
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -35,6 +44,9 @@ const ProductDetails = () => {
     text: "",
   });
   const [weight, setWeight] = useState("5kg");
+
+  const { addToCart } = useCart();
+  const [notification, setNotification] = useState(false);
 
   ///social share
   const handleShare = (platform) => {
@@ -81,6 +93,19 @@ const ProductDetails = () => {
     setPrevId(id);
     setActiveImage(detailImages[0]);
   }
+
+  const handleAddToCart = () => {
+    addToCart({
+      ...product,
+      id: `${product.id}-${weight}`, // ওজনের উপর ভিত্তি করে আলাদা ID তৈরি করা হচ্ছে
+      name: `${product.name} (${weight})`,
+      price: price, // ডাইনামিক্যালি হিসাব করা প্রাইস
+      image: activeImage,
+      qty: qty, // ইউজারের সিলেক্ট করা কোয়ান্টিটি
+    });
+    setNotification(true);
+    setTimeout(() => setNotification(false), 2000);
+  };
 
   /* Data fetching API*/
   // const [products, setProduct] = useState(null); // প্রোডাক্ট ডাটা রাখার জন্য
@@ -132,7 +157,7 @@ const ProductDetails = () => {
                     <img
                       src={src}
                       alt={`${product.name} view ${idx + 1}`}
-                      className="w-full h-[70px] object-cover rounded-lg"
+                      className="w-full cursor-pointer h-[70px] object-cover rounded-lg"
                       loading="lazy"
                     />
                   </button>
@@ -156,7 +181,7 @@ const ProductDetails = () => {
                     navigate("/");
                   }
                 }}
-                className="absolute top-0 right-0 w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                className="absolute cursor-pointer top-0 right-0 w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 aria-label="Close"
               >
                 <BiX className="w-4 h-4 mx-auto" />
@@ -221,7 +246,7 @@ const ProductDetails = () => {
                 <div className="inline-flex items-center rounded-md overflow-hidden border border-emerald-700">
                   <button
                     type="button"
-                    className="w-9 h-9 flex items-center justify-center bg-emerald-700 text-white text-[18px] leading-none hover:bg-emerald-800"
+                    className="w-9 h-9 flex items-center cursor-pointer justify-center bg-emerald-700 text-white text-[18px] leading-none hover:bg-emerald-800"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
                     aria-label="Decrease quantity"
                   >
@@ -232,7 +257,7 @@ const ProductDetails = () => {
                   </span>
                   <button
                     type="button"
-                    className="w-9 h-9 flex items-center justify-center bg-emerald-700 text-white text-[18px] leading-none hover:bg-emerald-800"
+                    className="w-9 h-9 flex items-center cursor-pointer justify-center bg-emerald-700 text-white text-[18px] leading-none hover:bg-emerald-800"
                     onClick={() => setQty((q) => q + 1)}
                     aria-label="Increase quantity"
                   >
@@ -246,7 +271,7 @@ const ProductDetails = () => {
                   <select
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="border border-gray-200 rounded-md px-3 py-2 text-[12px] bg-white"
+                    className="border border-gray-200 cursor-pointer rounded-md px-3 py-2 text-[12px] bg-white"
                   >
                     <option value="5kg">5kg</option>
                     <option value="10kg">10kg</option>
@@ -266,7 +291,7 @@ const ProductDetails = () => {
                 <button
                   type="button"
                   onClick={() => handleShare("facebook")}
-                  className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-colors"
+                  className="w-8 h-8 rounded-full cursor-pointer bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-colors"
                   aria-label="Share on Facebook"
                 >
                   <FaFacebook className="w-4 h-4" />
@@ -274,7 +299,7 @@ const ProductDetails = () => {
                 <button
                   type="button"
                   onClick={() => handleShare("twitter")}
-                  className="w-8 h-8 rounded-full bg-sky-50 text-sky-500 flex items-center justify-center hover:bg-sky-100 transition-colors"
+                  className="w-8 h-8 rounded-full cursor-pointer bg-sky-50 text-sky-500 flex items-center justify-center hover:bg-sky-100 transition-colors"
                   aria-label="Share on Twitter"
                 >
                   <BsTwitter className="w-4 h-4" />
@@ -285,14 +310,15 @@ const ProductDetails = () => {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  className="flex-1 bg-emerald-800 text-white text-[13px] font-semibold px-5 py-3 rounded-xl hover:bg-emerald-900 transition-colors inline-flex items-center justify-center gap-2"
+                  onClick={handleAddToCart}
+                  className="cursor-pointer flex-1 bg-emerald-800 text-white text-[13px] font-semibold px-5 py-3 rounded-xl hover:bg-emerald-900 transition-colors inline-flex items-center justify-center gap-2"
                 >
                   <FaShoppingCart className="w-4 h-4" />
                   Add to Cart
                 </button>
                 <button
                   type="button"
-                  className=" w-12 h-12 rounded-xl border border-gray-200 text-gray-500 hover:text-gray-700 inline-flex items-center justify-center"
+                  className="cursor-pointer  w-12 h-12 rounded-xl border border-gray-200 text-gray-500 hover:text-gray-700 inline-flex items-center justify-center"
                   aria-label="Add to wishlist"
                 >
                   <BiHeart className="w-5 h-5" />
@@ -307,7 +333,7 @@ const ProductDetails = () => {
                 <button
                   type="button"
                   onClick={() => setActiveTab("description")}
-                  className={`px-3 py-2 text-[12px] font-semibold ${
+                  className={`cursor-pointer px-3 py-2 text-[12px] font-semibold ${
                     activeTab === "description"
                       ? "text-emerald-800 border-b-2 border-emerald-700"
                       : "text-gray-500"
@@ -318,7 +344,7 @@ const ProductDetails = () => {
                 <button
                   type="button"
                   onClick={() => setActiveTab("reviews")}
-                  className={`px-3 py-2 text-[12px] font-semibold ${
+                  className={`px-3 cursor-pointer  py-2 text-[12px] font-semibold ${
                     activeTab === "reviews"
                       ? "text-emerald-800 border-b-2 border-emerald-700"
                       : "text-gray-500"
@@ -351,9 +377,14 @@ const ProductDetails = () => {
                         <span className="text-[13px] font-semibold text-gray-900">
                           {r.name}
                         </span>
-                        <span className="text-[12px] text-amber-500">
-                          {"★".repeat(r.rating)}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                            {ratingLabels[r.rating]}
+                          </span>
+                          <span className="text-[12px] text-amber-500">
+                            {"★".repeat(r.rating)}
+                          </span>
+                        </div>
                       </div>
                       <p className="text-[13px] text-gray-600">{r.text}</p>
                     </div>
@@ -379,7 +410,7 @@ const ProductDetails = () => {
                         }
                       />
                       <select
-                        className="border border-gray-200 rounded-md px-3 py-2 text-[13px]"
+                        className="border cursor-pointer border-gray-200 rounded-md px-3 py-2 text-[13px]"
                         value={reviewForm.rating}
                         onChange={(e) =>
                           setReviewForm({
@@ -390,7 +421,7 @@ const ProductDetails = () => {
                       >
                         {[5, 4, 3, 2, 1].map((r) => (
                           <option key={r} value={r}>
-                            {r} Star
+                            {ratingLabels[r]}
                           </option>
                         ))}
                       </select>
@@ -406,7 +437,7 @@ const ProductDetails = () => {
                     />
                     <button
                       type="submit"
-                      className="bg-emerald-800 text-white text-[12px] font-semibold px-4 py-2 rounded-md hover:bg-emerald-900"
+                      className="bg-emerald-800 cursor-pointer text-white text-[12px] font-semibold px-4 py-2 rounded-md hover:bg-emerald-900"
                     >
                       Submit Review
                     </button>
@@ -423,6 +454,18 @@ const ProductDetails = () => {
             />
           </div>
         </div>
+
+        {/* Notification Popup */}
+        {notification && (
+          <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
+            <div className="bg-emerald-700 text-white px-3 py-2 rounded-lg shadow-2xl flex items-center justify-center gap-1 animate-in fade-in slide-in-from-right duration-300 max-w-md">
+              <BiCheck className="text-4xl font-bold flex-shrink-0" />
+              <p className="text-base font-semibold text-white">
+                Added to cart successfully
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </StatusHandler>
   );

@@ -9,7 +9,7 @@ const trustItems = [
           <rect x='42' y='26' width='16' height='14' rx='3' fill='#dff0e1' stroke='#2f5e3b' stroke-width='3'/>
           <circle cx='20' cy='46' r='6' fill='#2f5e3b'/>
           <circle cx='48' cy='46' r='6' fill='#2f5e3b'/>
-        </svg>`
+        </svg>`,
       ),
     alt: "Delivery truck",
   },
@@ -21,7 +21,7 @@ const trustItems = [
         `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
           <circle cx='32' cy='32' r='22' fill='#e7f6ed' stroke='#2f5e3b' stroke-width='3'/>
           <path d='M20 33l7 7 17-18' fill='none' stroke='#2f5e3b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>
-        </svg>`
+        </svg>`,
       ),
     alt: "Verified badge",
   },
@@ -33,7 +33,7 @@ const trustItems = [
         `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
           <path d='M24 16h16a14 14 0 010 28H26' fill='none' stroke='#2f5e3b' stroke-width='4' stroke-linecap='round'/>
           <path d='M26 32l-8-8v16z' fill='#2f5e3b'/>
-        </svg>`
+        </svg>`,
       ),
     alt: "Return arrow",
   },
@@ -46,7 +46,7 @@ const trustItems = [
           <rect x='16' y='28' width='32' height='24' rx='4' fill='#e7f6ed' stroke='#2f5e3b' stroke-width='3'/>
           <path d='M22 28v-6a10 10 0 0120 0v6' fill='none' stroke='#2f5e3b' stroke-width='3'/>
           <circle cx='32' cy='40' r='4' fill='#2f5e3b'/>
-        </svg>`
+        </svg>`,
       ),
     alt: "Secure lock",
   },
@@ -54,20 +54,20 @@ const trustItems = [
 
 export default function Trust() {
   return (
-    <div className="hidden sm:block bg-[#F8F9FA]  py-[18px] px-[24px]">
-      <div className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px]">
+    <div className="hidden sm:block bg-[#F8F9FA] py-[32px] px-[24px]">
+      <div className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px]">
         {trustItems.map((item) => (
           <div
             key={item.title}
-            className="flex items-center justify-center text-center gap-[12px] bg-white border border-[#e6efe6] rounded-[12px] px-[14px] py-[12px] shadow-[0_4px_14px_rgba(47,94,59,0.08)]"
+            className="flex flex-col items-center justify-center text-center gap-[16px] bg-white border border-[#e6efe6] rounded-[16px] px-[24px] py-[24px] shadow-[0_6px_20px_rgba(47,94,59,0.08)] transition-transform duration-300 hover:-translate-y-1"
           >
             <img
               src={item.icon}
               alt={item.alt}
-              className="w-[36px] h-[36px] object-contain"
+              className="w-[52px] h-[52px] flex-shrink-0 object-contain"
               loading="lazy"
             />
-            <span className="text-[18px]  font-semibold text-[#20412a] leading-[1.2]">
+            <span className="whitespace-nowrap text-[19px] font-bold text-[#20412a] leading-[1.3]">
               {item.title}
             </span>
           </div>

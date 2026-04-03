@@ -73,18 +73,6 @@ export const AllRoutes = createBrowserRouter([
         path: "/shop/:categoryName",
         element: <CategoryShop></CategoryShop>,
       },
-      {
-        path: "/oil",
-        element: <h1>Oil</h1>,
-      },
-      {
-        path: "/ghee",
-        element: <h1>Ghee</h1>,
-      },
-      {
-        path: "/dates",
-        element: <h1>Dates</h1>,
-      },
 
       //Footer Page
       {
