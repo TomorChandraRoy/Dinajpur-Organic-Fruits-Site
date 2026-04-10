@@ -1,6 +1,5 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useMemo, useState } from "react";
-import products from "../../utils/data/products.json";
+import { useMemo, useState, useEffect } from "react";
 import productDetailsData from "../../utils/data/productDetailsData.json";
 import SimilarProducts from "./SimilarProducts";
 import StatusHandler from "../../pages/OrderTracking/StatusHandler";
@@ -8,21 +7,20 @@ import { BiHeart, BiStar, BiX, BiCheck } from "react-icons/bi";
 import { FaFacebook, FaShoppingCart } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
 import { useCart } from "../../context/CartContext";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const product = products.find((p) => String(p.id) === String(id));
+  const axiosPublic = useAxiosPublic();
 
   const {ratingLabels,productImages,weightOptions,notificationText,shareTextPrefix} = productDetailsData;
 
-  // ৪. প্রোডাক্ট ইমেজ সেট করা
-  const detailImages = Array.from({ length: 4 }, (_, i) => {
-    return productImages[(Number(id) + i) % productImages.length];
-  });
-
-  const [activeImage, setActiveImage] = useState(detailImages[0]);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [activeImage, setActiveImage] = useState("");
+  const [detailImages, setDetailImages] = useState([]);
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
   const [reviews, setReviews] = useState([]);
@@ -35,6 +33,34 @@ const ProductDetails = () => {
 
   const { addToCart } = useCart();
   const [notification, setNotification] = useState(false);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        // ডাটাবেজ থেকে নির্দিষ্ট প্রোডাক্টটি কল করে আনা হচ্ছে
+        // নিচে আপনার ব্যাকএন্ডের সঠিক রাউটের নামটি দিন
+        const res = await axiosPublic.get(`/getSingleProduct/${id}`);
+        const fetchedProduct = res.data;
+        setProduct(fetchedProduct);
+
+        // ইমেজ সেট করা (ডাটাবেজে ছবি না থাকলে ডিফল্ট ছবি দেখাবে)
+        const images = Array.isArray(fetchedProduct.image) && fetchedProduct.image.length > 0
+          ? fetchedProduct.image
+          : (typeof fetchedProduct.image === 'string' ? [fetchedProduct.image]
+          : Array.from({ length: 4 }, (_, i) => productImages[((Number(id.replace(/\D/g, '')) || 0) + i) % productImages.length]));
+
+        setDetailImages(images);
+        setActiveImage(images[0]);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id, axiosPublic, productImages]);
 
   ///social share
   const handleShare = (platform) => {
@@ -65,27 +91,18 @@ const ProductDetails = () => {
     if (!product) return { price: 0, orig: 0, discountPercent: 0 };
 
     const selectedKg = Number(weight.replace("kg", "")) || 5;
-    const basePerKg = product.price / 5;
-    const baseOrigPerKg = product.orig / 5;
+    const basePerKg = (product.price || 0) / 5;
+    const baseOrigPerKg = (product.orig || product.price || 0) / 5;
     const nextPrice = Math.round(basePerKg * selectedKg);
     const nextOrig = Math.round(baseOrigPerKg * selectedKg);
-    const nextDiscount = Math.round(((nextOrig - nextPrice) / nextOrig) * 100);
+    const nextDiscount = nextOrig > nextPrice ? Math.round(((nextOrig - nextPrice) / nextOrig) * 100) : 0;
     return { price: nextPrice, orig: nextOrig, discountPercent: nextDiscount };
   }, [product, weight]);
-
-  const [prevId, setPrevId] = useState(id);
-
-  // যদি ইউজার নতুন কোনো প্রোডাক্টে যায় (id চেঞ্জ হয়),
-  // তাহলে সাথে সাথে ইমেজ রিসেট হয়ে যাবে কোনো ডাবল রেন্ডার ছাড়াই।
-  if (id !== prevId) {
-    setPrevId(id);
-    setActiveImage(detailImages[0]);
-  }
 
   const handleAddToCart = () => {
     addToCart({
       ...product,
-      id: `${product.id}-${weight}`, // ওজনের উপর ভিত্তি করে আলাদা ID তৈরি করা হচ্ছে
+      id: `${product._id || product.id}-${weight}`, // ওজনের উপর ভিত্তি করে আলাদা ID তৈরি করা হচ্ছে
       name: `${product.name} (${weight})`,
       price: price, // ডাইনামিক্যালি হিসাব করা প্রাইস
       image: activeImage,
@@ -95,37 +112,15 @@ const ProductDetails = () => {
     setTimeout(() => setNotification(false), 2000);
   };
 
-  /* Data fetching API*/
-  // const [products, setProduct] = useState(null); // প্রোডাক্ট ডাটা রাখার জন্য
-  // const [loading, setLoading] = useState(true); // লোডিং স্টেট (শুরুতে true থাকবে)
-
-  // useEffect(() => {
-  //   // এখানে আপনার API কল হবে
-  //   const fetchProduct = async () => {
-  //     try {
-  //       setLoading(true); // ডাটা আনা শুরু হলে লোডিং ট্রু
-  //       const response = await fetch(`https://your-api.com/products/${id}`);
-  //       const data = await response.json();
-
-  //       setProduct(data);
-  //     } catch (error) {
-  //       console.error("Error fetching product:", error);
-  //     } finally {
-  //       setLoading(false); // ডাটা আসুক বা না আসুক, লোডিং শেষ
-  //     }
-  //   };
-
-  //   fetchProduct();
-  // }, [id]);
-
   return (
-    <StatusHandler loading={false} product={products}>
-      <section className="py-16 px-6 bg-gray-50">
-        <div
-          className="max-w-[1200px] mx-auto bg-[#f7faf9] rounded-2xl border border-gray-100
-        shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 p-6">
+    <StatusHandler loading={loading} product={product}>
+      {product && (
+        <section className="py-16 px-6 bg-gray-50">
+          <div
+            className="max-w-[1200px] mx-auto bg-[#f7faf9] rounded-2xl border border-gray-100
+          shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 p-6">
             <div className="rounded-2xl overflow-hidden">
               <img
                 src={activeImage}
@@ -451,7 +446,7 @@ const ProductDetails = () => {
           {/* Similar Products Section */}
           <div className="px-6 pb-8">
             <SimilarProducts
-              currentProductId={product.id}
+              currentProductId={product?._id || product?.id}
               category={product.cat}
             />
           </div>
@@ -469,7 +464,8 @@ const ProductDetails = () => {
             </div>
           </div>
         )}
-      </section>
+        </section>
+      )}
     </StatusHandler>
   );
 };

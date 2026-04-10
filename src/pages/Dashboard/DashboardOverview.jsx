@@ -1,17 +1,19 @@
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import AdminDashboardHome from "./AdminDashboardHome";
-import UserDashboardHome from "./UserDashboardHome";
+//!delete hobe
 
-const DashboardOverview = () => {
-  const { userInfo } = useContext(AuthContext);
+// import { useContext } from "react";
+// import { AuthContext } from "../../context/AuthContext";
+// import AdminDashboardHome from "./AdminDashboardHome";
+// import UserDashboardHome from "./UserDashboardHome";
 
-  if (userInfo?.role === "admin") {
-    return <AdminDashboardHome />;
-  }
+// const DashboardOverview = () => {
+//   const { userInfo } = useContext(AuthContext);
 
-  return <UserDashboardHome />;
-};
+//   if (userInfo?.role === "admin") {
+//     return <AdminDashboardHome />;
+//   }
 
-export default DashboardOverview;
+//   return <UserDashboardHome />;
+// };
+
+// export default DashboardOverview;
 
