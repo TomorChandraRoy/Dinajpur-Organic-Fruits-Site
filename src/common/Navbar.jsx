@@ -1,21 +1,8 @@
 import { NavLink } from "react-router-dom";
+import navbarData from "../utils/data/navbarData.json";
 
 const Navbar = ({ variant = "bar", onNavigate }) => {
-  const menus = [
-    // { name: "🔥 OFFER ZONE", path: "/offer", special: true },
-    { name: "Home", path: "/" },
-    { name: "Lychee (লিচু)", path: "/shop/Lychee" },
-    { name: "Banana (কলা)", path: "/shop/Banana" },
-    { name: "Mango (আম)", path: "/shop/Mango" },
-    { name: "Papaya (পেঁপে)", path: "/shop/Papaya" },
-    { name: "Jujube (বরই / কুল)", path: "/shop/Jujube" },
-    { name: "Shidol (শিদল)", path: "/shop/Shidol" },
-    { name: "Beaten Rice (চিড়া)", path: "/shop/Beaten%20Rice" },
-    { name: "Papad (পাপড়)", path: "/shop/Papad" },
-    { name: "Sugondhi Rice (সুগন্ধী চাল)", path: "/shop/Sugondhi%20Rice" },
-    // { name: "Freshwater Fish (মিঠা পানির মাছ)", path: "/freshwaterfish" },
-    // { name: "Pickle (আচার)", path: "/pickle" },
-  ];
+  const { menus } = navbarData;
 
   const isDrawer = variant === "drawer";
   const navClass = isDrawer

@@ -1,0 +1,24 @@
+{
+  "ratingLabels": {
+    "5": "Perfect",
+    "4": "Good",
+    "3": "Average",
+    "2": "Not bad",
+    "1": "Very poor"
+  },
+  "productImages": [
+    "/src/assets/mango.webp",
+    "/src/assets/banna.png",
+    "/src/assets/lechnu.jpg",
+    "/src/assets/lachu.jpg",
+    "/src/assets/sublogo.png",
+    "/src/assets/mangoo.jpg"
+  ],
+  "weightOptions": [
+    { "label": "5kg", "value": "5kg" },
+    { "label": "10kg", "value": "10kg" },
+    { "label": "30kg", "value": "30kg" }
+  ],
+  "notificationText": "Added to cart successfully",
+  "shareTextPrefix": "Check out this amazing product: "
+}

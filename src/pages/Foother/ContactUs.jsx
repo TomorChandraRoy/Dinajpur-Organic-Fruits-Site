@@ -1,30 +1,6 @@
 import { useState } from "react";
-import {
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
-} from "react-icons/fa";
-
-/* =========================
-   Contact Data (Dynamic)
-========================= */
-const contactInfo = [
-  {
-    icon: "location",
-    text: "Dhaka, Bangladesh",
-    color: "text-blue-600",
-  },
-  {
-    icon: "phone",
-    text: "+880 1234 567890",
-    color: "text-green-600",
-  },
-  {
-    icon: "email",
-    text: "contact@example.com",
-    color: "text-red-500",
-  },
-];
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import contactUsData from "../../utils/data/contactUsData.json";
 
 /* =========================
    Icon Map
@@ -52,7 +28,15 @@ const ContactItem = ({ item }) => {
 /* =========================
    Main Component
 ========================= */
-const ContactUs= () => {
+const ContactUs = () => {
+  const {
+    heading,
+    contactSection,
+    contactInfo,
+    mapUrl,
+    form: formData,
+  } = contactUsData;
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -77,29 +61,21 @@ const ContactUs= () => {
   return (
     <div className="bg-gray-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
-
         {/* Heading */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-slate-900">
-            Contact Us
-          </h2>
-          <p className="text-slate-600 mt-2">
-            Have any questions? We'd love to hear from you.
-          </p>
+          <h2 className="text-3xl font-bold text-slate-900">{heading.title}</h2>
+          <p className="text-slate-600 mt-2">{heading.subtitle}</p>
         </div>
 
         {/* Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-
           {/* Left: Contact Info */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-xl font-semibold mb-4 text-slate-900">
-              Get in Touch
+              {contactSection.title}
             </h3>
 
-            <p className="text-slate-600 mb-6">
-              Feel free to reach out via form or contact details below.
-            </p>
+            <p className="text-slate-600 mb-6">{contactSection.description}</p>
 
             {/* Dynamic Contact Items */}
             <div className="space-y-4 text-sm text-slate-700">
@@ -113,7 +89,7 @@ const ContactUs= () => {
               <iframe
                 title="map"
                 className="w-full h-48 rounded-md"
-                src="https://maps.google.com/maps?q=dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                src={mapUrl}
               />
             </div>
           </div>
@@ -121,11 +97,10 @@ const ContactUs= () => {
           {/* Right: Form */}
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-xl font-semibold mb-4 text-slate-900">
-              Send Message
+              {formData.title}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-
               {/* Name */}
               <input
                 type="text"
@@ -164,15 +139,13 @@ const ContactUs= () => {
                 type="submit"
                 className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition"
               >
-                Send Message
+                {formData.buttonText}
               </button>
-
             </form>
           </div>
-
         </div>
       </div>
     </div>
   );
-}
+};
 export default ContactUs;

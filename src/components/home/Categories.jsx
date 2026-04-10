@@ -3,24 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import mango from "../../assets/mango.webp";
-import banana from "../../assets/banna.png";
-import lychee from "../../assets/lechnu.jpg";
-import longan from "../../assets/lachu.jpg";
-import sublogo from "../../assets/sublogo.png";
-import { products } from "../../utils/data/products";
-
-const categoryVisuals = {
-  Lychee: { image: lychee },
-  Banana: { image: banana },
-  Mango: { image: mango },
-  Papaya: { image: mango },
-  Jujube: { image: longan },
-  Shidol: { image: sublogo },
-  "Beaten Rice": { image: banana },
-  Papad: { image: sublogo },
-  "Sugondhi Rice": { image: mango },
-};
+import products from "../../utils/data/products.json";
+import categoriesData from "../../utils/data/categoriesData.json";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -31,10 +15,10 @@ const Categories = () => {
       return acc;
     }, {});
 
-    return Object.keys(categoryVisuals).map((name) => ({
-      name,
-      count: counts[name] || 0,
-      image: categoryVisuals[name].image,
+    return categoriesData.categories.map((cat) => ({
+      name: cat.name,
+      count: counts[cat.name] || 0,
+      image: cat.image,
     }));
   }, []);
 
@@ -43,12 +27,10 @@ const Categories = () => {
       <div className="mx-auto max-w-[1200px] px-4 ">
         <div className="mb-6 text-center">
           <div className="mb-2 inline-block rounded-3xl border border-green-600 px-5 py-2 text-center text-[16px] font-semibold text-black">
-            Browse by Category
+            {categoriesData.badgeText}
           </div>
-          <h2 className="mb-1 text-3xl font-bold">Our Product Collections</h2>
-          <p className="text-gray-500">
-            Farm-fresh organic products for a healthier lifestyle
-          </p>
+          <h2 className="mb-1 text-3xl font-bold">{categoriesData.title}</h2>
+          <p className="text-gray-500">{categoriesData.subtitle}</p>
         </div>
 
         <Swiper

@@ -1,0 +1,20 @@
+{
+  "heading": {
+    "title": "Meet our team",
+    "description": "We’re a group of passionate professionals committed to building high-quality digital solutions. Our diverse skills and collaborative spirit drive innovation."
+  },
+  "teamMembers": [
+    {
+      "name": "Ripon Roy",
+      "role": "Founder Of CEO",
+      "image": "/src/assets/1.png",
+      "description": "Expert in full-stack development with 3+ years of experience building scalable web applications."
+    },
+    {
+      "name": "Shuvo Adhikari",
+      "role": "Founder Of CEO",
+      "image": "/src/assets/shuvo.jpeg",
+      "description": "Specializes in Node.js and cloud infrastructure, ensuring performance and reliability."
+    }
+  ]
+}

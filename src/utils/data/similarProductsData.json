@@ -1,0 +1,12 @@
+{
+  "title": "Similar Products",
+  "notificationText": "Added to cart successfully",
+  "productImages": [
+    "/src/assets/mango.webp",
+    "/src/assets/banna.png",
+    "/src/assets/lechnu.jpg",
+    "/src/assets/lachu.jpg",
+    "/src/assets/sublogo.png",
+    "/src/assets/mangoo.jpg"
+  ]
+}

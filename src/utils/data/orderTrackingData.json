@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Order Tracking",
+    "subtitle": "Track your order in real time"
+  },
+  "search": {
+    "placeholder": "Enter Order ID (e.g. GB-20241)",
+    "buttonText": "Track",
+    "notFoundMessage": "❌ No Order Found. Please enter a valid Order ID."
+  },
+  "contact": {
+    "phone": "+8801321208940",
+    "supportText": "Contact Support",
+    "shopText": "Shop Again"
+  },
+  "orders": {
+    "GB-20241": {
+      "status": "Shipped",
+      "address": "House 12, Road 4, Dhanmondi, Dhaka",
+      "steps": [
+        {
+          "title": "Order Placed",
+          "desc": "Confirmed",
+          "active": true,
+          "icon": "FaBoxOpen"
+        },
+        {
+          "title": "Payment Confirmed",
+          "desc": "Done",
+          "active": true,
+          "icon": "FaCreditCard"
+        },
+        {
+          "title": "Processing",
+          "desc": "Packing",
+          "active": true,
+          "icon": "FaCheckCircle"
+        },
+        {
+          "title": "Out for Delivery",
+          "desc": "On the way",
+          "active": true,
+          "icon": "FaTruck"
+        },
+        {
+          "title": "Delivered",
+          "desc": "Pending",
+          "active": false,
+          "icon": "FaShippingFast"
+        }
+      ]
+    }
+  }
+}

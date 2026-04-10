@@ -1,36 +1,6 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
-
-/* =========================
-   FAQ Data (Dynamic)
-========================= */
-const faqs = [
-  {
-    question: "What services do you offer?",
-    answer:
-      "We provide web development, UI/UX design, and full-stack solutions tailored to your business needs.",
-  },
-  {
-    question: "How can I contact support?",
-    answer:
-      "You can contact us through our contact form or email us at support@example.com.",
-  },
-  {
-    question: "Do you offer custom solutions?",
-    answer:
-      "Yes, we specialize in custom-built applications based on your requirements.",
-  },
-  {
-    question: "What technologies do you use?",
-    answer:
-      "We use modern technologies like React, Node.js, Tailwind CSS, and more.",
-  },
-  {
-    question: "How long does a project take?",
-    answer:
-      "Project timelines vary depending on complexity, but we always aim for timely delivery.",
-  },
-];
+import faqsData from "../../utils/data/faqsData.json";
 
 /* =========================
    FAQ Item Component
@@ -42,9 +12,7 @@ const FAQItem = ({ item, isOpen, onClick }) => {
         onClick={onClick}
         className="w-full flex justify-between items-center p-4 text-left"
       >
-        <span className="font-medium text-slate-900">
-          {item.question}
-        </span>
+        <span className="font-medium text-slate-900">{item.question}</span>
 
         <FaChevronDown
           className={`transition-transform duration-300 ${
@@ -55,9 +23,7 @@ const FAQItem = ({ item, isOpen, onClick }) => {
 
       {/* Answer */}
       {isOpen && (
-        <div className="px-4 pb-4 text-sm text-slate-600">
-          {item.answer}
-        </div>
+        <div className="px-4 pb-4 text-sm text-slate-600">{item.answer}</div>
       )}
     </div>
   );
@@ -66,8 +32,9 @@ const FAQItem = ({ item, isOpen, onClick }) => {
 /* =========================
    Main Component
 ========================= */
-const FAQ =() =>{
+const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const { heading, faqs } = faqsData;
 
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -76,15 +43,10 @@ const FAQ =() =>{
   return (
     <div className="bg-gray-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-
         {/* Heading */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-slate-900">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-slate-600 mt-2">
-            Find answers to common questions below.
-          </p>
+          <h2 className="text-3xl font-bold text-slate-900">{heading.title}</h2>
+          <p className="text-slate-600 mt-2">{heading.subtitle}</p>
         </div>
 
         {/* FAQ List */}
@@ -98,9 +60,8 @@ const FAQ =() =>{
             />
           ))}
         </div>
-
       </div>
     </div>
   );
-}
-export default  FAQ;
+};
+export default FAQ;

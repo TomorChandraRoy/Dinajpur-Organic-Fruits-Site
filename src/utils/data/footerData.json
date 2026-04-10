@@ -1,0 +1,33 @@
+{
+  "links": [
+    { "name": "About Us", "path": "/about-us" },
+    { "name": "Meet the Team", "path": "meet-team" },
+    { "name": "How to Order", "path": "/how-to-order" },
+    { "name": "Terms & Condition", "path": "/terms-condition" }
+  ],
+  "helpfulLinks": [
+    { "name": "Contact Us", "path": "/contact" },
+    { "name": "FAQs", "path": "/faqs" },
+    { "name": "Live Chat", "path": "/chat" },
+    { "name": "Order Tracking", "path": "/order-tracking" }
+  ],
+  "legalLinks": [
+    { "name": "Returns Policy", "path": "/returns-policy" },
+    { "name": "Refund Policy", "path": "/refund-policy" },
+    { "name": "Privacy Policy", "path": "/privacy-policy" }
+  ],
+  "contact": {
+    "phone": "8801863956943",
+    "message": "Hello I want to contact you"
+  },
+  "companyInfo": {
+    "name": "Dinajpur Organic Fruits",
+    "tagline": "বিশুদ্ধতা ও স্বাদের নিশ্চয়তা",
+    "description": "Dinajpur Organic Fruits offers fresh, organic, and chemical-free fruits sourced directly from local farms. We are committed to providing healthy, safe, and naturally delicious produce so you and your family can enjoy the true taste of nature every day."
+  },
+  "socialLinks": {
+    "youtube": "https://www.youtube.com/@grameenGanthStudio",
+    "instagram": "https://www.instagram.com/dinajpurorganicfruits",
+    "facebook": "https://www.facebook.com/dinajpurorganicfruits"
+  }
+}

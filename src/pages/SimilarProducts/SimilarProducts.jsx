@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { products } from "../../utils/data/products";
+import  products  from "../../utils/data/products.json";
 import SimilarProducts from "../../components/product/SimilarProducts";
 
 const SimilarProductsPage = () => {

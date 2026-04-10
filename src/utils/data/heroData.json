@@ -1,0 +1,31 @@
+{
+  "badgeText": "🌿 100% Organic & Natural",
+  "titleStart": "Safe Food ",
+  "titleHighlight": "Delivered",
+  "titleEnd": " to Your Doorstep",
+  "description": "দিনাজপুর অর্গানিক ফ্রুইটস থেকে পান সেরা মানের অর্গানিক খাদ্যপণ্য — বিশুদ্ধ মধু, খাঁটি ঘি, লিচু ,কলা এবং আরও অনেক কিছু।",
+  "buttons": {
+    "primary": {
+      "text": "🛒 Shop Now",
+      "link": "#products"
+    },
+    "secondary": {
+      "text": "📋 View All Products",
+      "link": "#"
+    }
+  },
+  "images": [
+    {
+      "src": "/src/assets/banna.png",
+      "alt": "Dinajpur Banana"
+    },
+    {
+      "src": "/src/assets/mango.webp",
+      "alt": "Dinajpur Mango"
+    },
+    {
+      "src": "/src/assets/lachu.jpg",
+      "alt": "Dinajpur Lychee"
+    }
+  ]
+}

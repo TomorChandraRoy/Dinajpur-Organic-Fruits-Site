@@ -1,0 +1,28 @@
+{
+  "heading": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions below."
+  },
+  "faqs": [
+    {
+      "question": "What services do you offer?",
+      "answer": "We provide web development, UI/UX design, and full-stack solutions tailored to your business needs."
+    },
+    {
+      "question": "How can I contact support?",
+      "answer": "You can contact us through our contact form or email us at support@example.com."
+    },
+    {
+      "question": "Do you offer custom solutions?",
+      "answer": "Yes, we specialize in custom-built applications based on your requirements."
+    },
+    {
+      "question": "What technologies do you use?",
+      "answer": "We use modern technologies like React, Node.js, Tailwind CSS, and more."
+    },
+    {
+      "question": "How long does a project take?",
+      "answer": "Project timelines vary depending on complexity, but we always aim for timely delivery."
+    }
+  ]
+}

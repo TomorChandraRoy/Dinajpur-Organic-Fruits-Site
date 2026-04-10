@@ -1,0 +1,32 @@
+{
+  "heading": {
+    "title": "Contact Us",
+    "subtitle": "Have any questions? We'd love to hear from you."
+  },
+  "contactSection": {
+    "title": "Get in Touch",
+    "description": "Feel free to reach out via form or contact details below."
+  },
+  "contactInfo": [
+    {
+      "icon": "location",
+      "text": "Dhaka, Bangladesh",
+      "color": "text-blue-600"
+    },
+    {
+      "icon": "phone",
+      "text": "+880 1234 567890",
+      "color": "text-green-600"
+    },
+    {
+      "icon": "email",
+      "text": "contact@example.com",
+      "color": "text-red-500"
+    }
+  ],
+  "mapUrl": "https://maps.google.com/maps?q=dhaka&t=&z=13&ie=UTF8&iwloc=&output=embed",
+  "form": {
+    "title": "Send Message",
+    "buttonText": "Send Message"
+  }
+}

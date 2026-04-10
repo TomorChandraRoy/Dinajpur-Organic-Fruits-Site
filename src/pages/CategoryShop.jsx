@@ -10,27 +10,10 @@ import {
   BiX,
 } from "react-icons/bi";
 import { useCart } from "../context/CartContext";
-import mango from "../assets/mango.webp";
-import banana from "../assets/banna.png";
-import lychee from "../assets/lechnu.jpg";
-import longan from "../assets/lachu.jpg";
-import sublogo from "../assets/sublogo.png";
-import mangoo from "../assets/mangoo.jpg";
-import { products } from "../utils/data/products";
+import products from "../utils/data/products.json";
+import categoryShopData from "../utils/data/categoryShopData.json";
 
-const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
-
-const categoryVisuals = {
-  Lychee: { image: lychee },
-  Banana: { image: banana },
-  Mango: { image: mango },
-  Papaya: { image: mangoo },
-  Jujube: { image: longan },
-  Shidol: { image: sublogo },
-  "Beaten Rice": { image: banana },
-  Papad: { image: sublogo },
-  "Sugondhi Rice": { image: mango },
-};
+const { productImages, categoryVisuals } = categoryShopData;
 
 const CategoryShop = () => {
   const navigate = useNavigate();

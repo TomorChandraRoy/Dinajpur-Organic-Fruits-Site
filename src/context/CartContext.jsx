@@ -1,9 +1,24 @@
-import { createContext, useContext, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  // ১. LocalStorage থেকে কার্টের ডেটা লোড করা
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("cartItems");
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error("Failed to parse cart items from localStorage", error);
+      return [];
+    }
+  });
+
+  // ২. কার্ট আপডেট হলেই LocalStorage-এ সেভ করা
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -19,11 +34,8 @@ export const CartProvider = ({ children }) => {
       return [
         ...prevItems,
         {
-          id: product.id,
-          name: product.name,
-          price: product.price,
+          ...product,
           qty: qtyToAdd,
-          image: product.image,
         },
       ];
     });

@@ -1,32 +1,42 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import banana from "../../assets/banna.png";
-import mango from "../../assets/mango.webp";
-import lychee from "../../assets/lechnu.jpg";
-import longan from "../../assets/lachu.jpg";
-import sublogo from "../../assets/sublogo.png";
-import mangoo from "../../assets/mangoo.jpg";
-import { products } from "../../utils/data/products";
+import products from "../../utils/data/products.json";
+import similarProductsData from "../../utils/data/similarProductsData.json";
 import { BiHeart, BiPlus, BiCheck } from "react-icons/bi";
 import { useCart } from "../../context/CartContext";
 
 const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const productImages = [mango, banana, lychee, longan, sublogo, mangoo];
   const { addToCart } = useCart();
   const [notification, setNotification] = useState(false);
+  const { title, notificationText, productImages } = similarProductsData;
 
-  const items = products
-    .filter((p) => p.cat === category && p.id !== currentProductId)
-    .slice(0, limit);
 
-  if (items.length === 0) return null;
+  // const items = products
+  //   .filter((p) => p.cat === category && p.id !== currentProductId)
+  //   .slice(0, limit);
+
+  // if (items.length === 0) return null;
+
+// 1. Data Filter Logic (Fixed syntax & added safety)
+  const items = useMemo(() => {
+    if (!products || !Array.isArray(products)) return [];
+
+    return products
+      .filter(
+        (p) =>
+          p.cat === category &&
+          String(p.id) !== String(currentProductId)
+      )
+      .slice(0, limit);
+  }, [category, currentProductId, limit]);
+
 
   return (
     <div>
       <h2 className="mb-10  text-gray-900 w-fit mx-auto  text-center border-b-2 border-[#2D6A4F] px-4 py-2  font-medium text-2xl">
-        Similar Products
+        {title}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -130,7 +140,7 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
           <div className="bg-emerald-700 text-white px-3 py-2 rounded-lg shadow-2xl flex items-center justify-center gap-1 animate-in fade-in slide-in-from-right duration-300 max-w-md">
             <BiCheck className="text-4xl font-bold flex-shrink-0" />
             <p className="text-base font-semibold text-white">
-              Added to cart successfully
+              {notificationText}
             </p>
           </div>
         </div>

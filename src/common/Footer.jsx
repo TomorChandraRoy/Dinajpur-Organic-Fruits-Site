@@ -1,31 +1,13 @@
 import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
+import footerData from "../utils/data/footerData.json";
 
 const Footer = () => {
-  const links = [
-    { name: "About Us", path: "/about-us" },
-    { name: "Meet the Team", path: "meet-team" },
-    { name: "How to Order", path: "/how-to-order" },
-    { name: "Terms & Condition", path: "/terms-condition" },
-  ];
+  const { links, helpfulLinks, legalLinks, contact, companyInfo, socialLinks } =
+    footerData;
 
-  const helpfulLinks = [
-    { name: "Contact Us", path: "/contact" },
-    { name: "FAQs", path: "/faqs" },
-    { name: "Live Chat", path: "/chat" },
-    { name: "Order Tracking", path: "/order-tracking" },
-  ];
-
-  const legalLinks = [
-    { name: "Returns Policy", path: "/returns-policy" },
-    { name: "Refund Policy", path: "/refund-policy" },
-    { name: "Privacy Policy", path: "/privacy-policy" },
-  ];
-  const phone = "8801863956943";
-  const message = "Hello I want to contact you";
-
-  const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  const whatsappLink = `https://wa.me/${contact.phone}?text=${encodeURIComponent(contact.message)}`;
 
   return (
     <footer className="bg-green">
@@ -46,27 +28,24 @@ const Footer = () => {
 
               <div className="text-center sm:text-left">
                 <strong className="block text-[18px] text-(--green) font-['Playfair_Display'] leading-tight">
-                  Dinajpur Organic Fruits
+                  {companyInfo.name}
                 </strong>
                 <span className="text-[11px] text-gray-400 block mt-1">
-                  বিশুদ্ধতা ও স্বাদের নিশ্চয়তা
+                  {companyInfo.tagline}
                 </span>
               </div>
             </div>
 
             {/* DESCRIPTION */}
             <p className="mt-4 p-3  text-start lg:max-w-[20rem] md:max-w-xl lg:p-0 text-gray-500 mx-auto lg:mx-0">
-              Dinajpur Organic Fruits offers fresh, organic, and chemical-free
-              fruits sourced directly from local farms. We are committed to
-              providing healthy, safe, and naturally delicious produce so you
-              and your family can enjoy the true taste of nature every day.
+              {companyInfo.description}
             </p>
 
             {/* SOCIAL ICONS */}
             <ul className="mt-8 flex justify-center lg:justify-start md:justify-start  gap-6">
               <li>
                 <a
-                  href="https://www.youtube.com/@grameenGanthStudio"
+                  href={socialLinks.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-700 hover:text-red-500 transition"
@@ -80,7 +59,7 @@ const Footer = () => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://www.instagram.com/dinajpurorganicfruits"
+                  href={socialLinks.instagram}
                   className="text-gray-700 hover:text-pink-500 transition"
                 >
                   <span className="sr-only">Instagram</span>
@@ -90,7 +69,7 @@ const Footer = () => {
 
               <li>
                 <a
-                  href="https://www.facebook.com/dinajpurorganicfruits"
+                  href={socialLinks.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-700 hover:text-blue-600 transition"
@@ -174,7 +153,8 @@ const Footer = () => {
 
         {/* BOTTOM */}
         <p className="text-xs text-gray-500 border-t border-gray-100 pt-4 text-center lg:text-start md:text-center ">
-          &copy; 2026. Dinajpur Organic Fruits. All rights reserved.
+          &copy; {new Date().getFullYear()}. {companyInfo.name}. All rights
+          reserved.
         </p>
       </div>
     </footer>

@@ -11,9 +11,9 @@ const SignIn = () => {
   const { signIn, resetPassword, loading, signInWithGoogle } =
     useContext(AuthContext);
   const navigate = useNavigate();
-  const loact = useLocation();
   const axiosPublic = useAxiosPublic();
-  const from = loact?.state?.from?.pathname || "/";
+const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
 
   // react-hook-form setup
   const {

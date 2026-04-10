@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import defaultUserSvg from "../../../assets/user-circles.svg";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { useCart } from "../../../context/CartContext";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import footerData from "../../../utils/data/footerData.json";
+import headerData from "../../../utils/data/headerData.json";
 
 const DesktopHeader = ({
   user,
@@ -13,10 +16,61 @@ const DesktopHeader = ({
   closeDropdown,
 }) => {
   const { cartItems } = useCart();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const navigate = useNavigate();
+  const searchRef = useRef(null);
+  const axiosPublic = useAxiosPublic();
+
+  const { companyInfo } = footerData;
+  const { searchPlaceholder, trackOrder, account, cart } = headerData;
+
   const photo = useMemo(
     () => user?.photoURL || defaultUserSvg,
     [user?.photoURL],
   );
+
+  // Click outside to close search suggestions
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Fetch search suggestions (Debounced)
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (searchQuery.trim().length > 0) {
+        try {
+          // এখানে আপনার ব্যাকএন্ডের সঠিক API Endpoint দিন (যেমন: /products?search=...)
+          const res = await axiosPublic.get(`/products?search=${encodeURIComponent(searchQuery)}`);
+          setSuggestions(res.data.slice(0, 5)); // টপ ৫টি প্রোডাক্ট দেখানোর জন্য
+          setShowSuggestions(true);
+        } catch (error) {
+          console.error("Search fetch error:", error);
+        }
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    };
+    const timeoutId = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, axiosPublic]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/shop?search=${searchQuery.trim()}`);
+      setShowSuggestions(false);
+    }
+  };
 
   return (
     <header className="hidden lg:block bg-white border-b border-[var(--border)] shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
@@ -36,24 +90,83 @@ const DesktopHeader = ({
             </div>
             <div>
               <strong className="block text-[18px] text-[var(--green)] font-['Playfair_Display'] leading-tight">
-                Dinajpur Organic Fruits
+                {companyInfo.name}
               </strong>
               <span className="text-[11px] text-[var(--gray)] leading-tight">
-                বিশুদ্ধতা ও স্বাদের নিশ্চয়তা
+                {companyInfo.tagline}
               </span>
             </div>
           </Link>
         </div>
-        {/*Search Bar */}
-        <div className="w-full md:flex-1 md:max-w-[480px] flex order-3 md:order-none border-2 border-[var(--border)] rounded-full overflow-hidden transition-colors focus-within:border-[var(--green)] md:mx-4">
-          <input
-            type="text"
-            placeholder="Search: Honey, Ghee, Dates, Oil..."
-            className="flex-1 border-0 outline-none py-[9px] px-[18px] text-[14px] bg-[#f9fafb] font-inherit"
-          />
-          <button className="bg-[var(--green)] border-0 px-[18px] cursor-pointer text-white text-[16px]">
-            <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-          </button>
+        {/* Search Bar with Auto Suggestions */}
+        <div
+          className="w-full md:flex-1 md:max-w-[480px] order-3 md:order-none md:mx-4 relative"
+          ref={searchRef}
+        >
+          <form
+            onSubmit={handleSearch}
+            className="flex border-2 border-[var(--border)] rounded-full overflow-hidden transition-colors focus-within:border-[var(--green)]"
+          >
+            <input
+              type="text"
+              placeholder={searchPlaceholder}
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggestions(true);
+              }}
+              onFocus={() => {
+                if (suggestions.length > 0) setShowSuggestions(true);
+              }}
+              className="flex-1 border-0 outline-none py-[9px] px-[18px] text-[14px] bg-[#f9fafb] font-inherit"
+            />
+            <button
+              type="submit"
+              className="bg-[var(--green)] border-0 px-[18px] cursor-pointer text-white text-[16px]"
+            >
+              <i
+                className="fa-solid fa-magnifying-glass"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </form>
+
+          {/* Suggestions Dropdown */}
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute top-full left-0 w-full bg-white border border-gray-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] rounded-xl mt-2 py-2 z-[110] max-h-[300px] overflow-y-auto">
+              {suggestions.map((product) => (
+                <div
+                  key={product._id || product.id}
+                  onClick={() => {
+                    navigate(`/shop?search=${product.name}`); // অথবা সরাসরি প্রোডাক্ট পেজে পাঠাতে পারেন `/product/${product._id}`
+                    setShowSuggestions(false);
+                    setSearchQuery("");
+                  }}
+                  className="px-4 py-2 hover:bg-green-50 cursor-pointer flex items-center gap-3 transition-colors border-b border-gray-50 last:border-0"
+                >
+                  <div className="w-10 h-10 rounded-md bg-gray-100 overflow-hidden flex-shrink-0">
+                    <img
+                      src={
+                        product.image ||
+                        product.imageUrl ||
+                        "/src/assets/sublogo.png"
+                      }
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-gray-800">
+                      {product.name}
+                    </span>
+                    <span className="text-xs text-green-600 font-bold">
+                      ৳{product.price}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         {/* Track Order/ Account /Buy Now*/}
         <div className="w-full md:w-auto flex items-center justify-center md:justify-end gap-4 md:gap-5">
@@ -61,7 +174,7 @@ const DesktopHeader = ({
             to="/order-tracking"
             className="bg-[var(--green)] text-white text-[13px] px-4 py-2 rounded-full whitespace-nowrap"
           >
-            Track Order
+            {trackOrder}
           </Link>
           <div className="relative" ref={dropdownRef}>
             {/* User Accout */}
@@ -127,7 +240,7 @@ const DesktopHeader = ({
               >
                 <FaUserCircle className="text-[24px] text-gray-600 group-hover:text-orange-600" />
                 <span className="text-[12px] font-medium text-gray-700 group-hover:text-orange-600">
-                  Account
+                  {account}
                 </span>
               </Link>
             )}
@@ -138,7 +251,7 @@ const DesktopHeader = ({
             className="no-underline text-[var(--dark)] text-[13px] flex flex-col items-center gap-[2px] relative"
           >
             <span className="text-[20px]">🛒</span>
-            <span>Cart</span>
+            <span>{cart}</span>
             <span className="absolute top-[-6px] right-[-8px] bg-[var(--amber)] text-white rounded-full w-[18px] h-[18px] text-[10px] flex items-center justify-center font-bold">
               {cartItems.length}
             </span>

@@ -23,20 +23,11 @@ const DashboardLayout = () => {
   return (
       <>
       {
-        role === "user" &&(
-          <>
+        role === "user" ? (
           <UserDashboardHome/>
-          </>
-        )
-      }
-      {
+        ):
         role === "admin"&&(
           <AdminDashboardHeader/>
-        )
-      }
-      {
-        role !== "user" && role !== "admin" && (
-          <UserDashboardHome />
         )
       }
       </>

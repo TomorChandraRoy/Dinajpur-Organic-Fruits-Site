@@ -10,30 +10,31 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import orderTrackingData from "../../utils/data/orderTrackingData.json";
+
+/* =========================
+   Icon Map
+========================= */
+const iconMap = {
+  FaBoxOpen,
+  FaCreditCard,
+  FaCheckCircle,
+  FaTruck,
+  FaShippingFast,
+};
 
 const OrderTracking = () => {
   const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState(null);
   const [searched, setSearched] = useState(false); // 👈 NEW FLAG
 
-  // demo data
-  const orders = {
-    "GB-20241": {
-      status: "Shipped",
-      address: "House 12, Road 4, Dhanmondi, Dhaka",
-      steps: [
-        { title: "Order Placed", desc: "Confirmed", active: true, icon: FaBoxOpen },
-        { title: "Payment Confirmed", desc: "Done", active: true, icon: FaCreditCard },
-        { title: "Processing", desc: "Packing", active: true, icon: FaCheckCircle },
-        { title: "Out for Delivery", desc: "On the way", active: true, icon: FaTruck },
-        { title: "Delivered", desc: "Pending", active: false, icon: FaShippingFast },
-      ],
-    },
-  };
+  const { header, search, contact, orders } = orderTrackingData;
 
   // 🔍 SEARCH
   const handleTrack = () => {
-  const id = orderId.trim().replace(/\s+/g, "").toUpperCase();
+    const id = orderId.trim().replace(/\s+/g, "").toUpperCase();
+    if (!id) return; // খালি ইনপুট হলে সার্চ করবে না
+
     setSearched(true); // 👈 user clicked track
 
     if (orders[id]) {
@@ -45,27 +46,25 @@ const OrderTracking = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-
       {/* HEADER */}
       <section className="bg-[#1b2d24] py-16 text-center text-white">
-        <h1 className="text-3xl md:text-5xl font-bold">
-          Order Tracking
-        </h1>
-        <p className="text-white/70 mt-2">
-          Track your order in real time
-        </p>
+        <h1 className="text-3xl md:text-5xl font-bold">{header.title}</h1>
+        <p className="text-white/70 mt-2">{header.subtitle}</p>
       </section>
 
       {/* CONTENT */}
       <section className="py-12 px-4">
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm p-6 md:p-10">
-
           {/* SEARCH */}
           <div className="flex gap-3">
             <input
               value={orderId}
-              onChange={(e) => setOrderId(e.target.value)}
-              placeholder="Enter Order ID (e.g. GB-20241)"
+              onChange={(e) => {
+                setOrderId(e.target.value);
+                setSearched(false); // টাইপ করার সময় এরর মেসেজ সরিয়ে ফেলবে
+              }}
+              onKeyDown={(e) => e.key === "Enter" && handleTrack()} // Enter চাপলে সার্চ হবে
+              placeholder={search.placeholder}
               className="w-full border px-4 py-2 rounded-lg outline-none focus:border-green-700"
             />
 
@@ -73,22 +72,20 @@ const OrderTracking = () => {
               onClick={handleTrack}
               className="bg-[#1b2d24] hover:bg-green-700 text-white px-4 rounded-lg flex items-center gap-2"
             >
-              <FaSearch /> Track
+              <FaSearch /> {search.buttonText}
             </button>
           </div>
-
 
           {/* NOT FOUND */}
           {searched && !order && (
             <p className="text-red-500 mt-5 font-medium">
-              ❌ No Order Found. Please enter a valid Order ID.
+              {search.notFoundMessage}
             </p>
           )}
 
           {/* ORDER FOUND */}
           {order && (
             <div className="mt-8">
-
               {/* HEADER */}
               <div className="flex justify-between items-center mb-4">
                 <h2 className="font-bold text-lg">
@@ -105,13 +102,11 @@ const OrderTracking = () => {
 
               {/* TIMELINE */}
               <div className="relative border-l-2 border-gray-200 ml-4">
-
                 {order.steps.map((step, index) => {
-                  const Icon = step.icon;
+                  const Icon = iconMap[step.icon];
 
                   return (
                     <div key={index} className="mb-8 ml-6 relative">
-
                       <span
                         className={`absolute -left-10 top-1 w-8 h-8 flex items-center justify-center rounded-full text-white
                         ${step.active ? "bg-green-700" : "bg-gray-300"}`}
@@ -123,38 +118,30 @@ const OrderTracking = () => {
                         {step.title}
                       </h3>
 
-                      <p className="text-sm text-gray-500">
-                        {step.desc}
-                      </p>
-
+                      <p className="text-sm text-gray-500">{step.desc}</p>
                     </div>
                   );
                 })}
-
               </div>
 
               {/* BUTTONS */}
               <div className="flex flex-col sm:flex-row gap-4 mt-10">
-
                 <a
-                  href="tel:+8801321208940"
+                  href={`tel:${contact.phone}`}
                   className="flex items-center justify-center gap-2 border border-green-700 text-green-700 px-5 py-2 rounded-full hover:bg-green-50"
                 >
-                  <FaPhone /> Contact Support
+                  <FaPhone /> {contact.supportText}
                 </a>
 
                 <Link
                   to="/"
                   className="flex items-center justify-center gap-2 bg-[#1b2d24] text-white px-5 py-2 rounded-full hover:bg-green-700"
                 >
-                  <FaShoppingCart /> Shop Again
+                  <FaShoppingCart /> {contact.shopText}
                 </Link>
-
               </div>
-
             </div>
           )}
-
         </div>
       </section>
     </div>

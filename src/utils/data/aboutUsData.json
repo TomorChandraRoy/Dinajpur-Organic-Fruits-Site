@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "title": "Our Story of Purity",
+    "description": "Bringing the authentic taste of Dinajpur’s finest organic fruits directly to your doorstep. We believe in food that is safe, healthy, and 100% natural."
+  },
+  "story": {
+    "image": "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=800",
+    "badge": "Since 2024",
+    "title": "Rooted in the Soil of Dinajpur",
+    "paragraphs": [
+      "Dinajpur Organic Fruits started with a simple mission: to bridge the gap between hardworking farmers and health-conscious families. We noticed that finding truly organic, chemical-free fruits in the city was becoming a challenge.",
+      "Today, we partner with local orchards in Dinajpur to ensure that every mango, litchi, and seasonal fruit we deliver meets the highest standards of purity. No formaline, no artificial ripening—just nature’s best."
+    ]
+  },
+  "features": [
+    {
+      "id": "organic",
+      "title": "100% Organic",
+      "subtitle": "Certified Purity"
+    },
+    {
+      "id": "delivery",
+      "title": "Fast Delivery",
+      "subtitle": "Across Bangladesh"
+    },
+    {
+      "id": "growth",
+      "title": "Natural Growth",
+      "subtitle": "No Chemicals"
+    },
+    {
+      "id": "clients",
+      "title": "5k+ Clients",
+      "subtitle": "Happy Families"
+    }
+  ],
+  "vision": {
+    "title": "Our Vision",
+    "quote": "\"To become the most trusted platform for organic produce in Bangladesh, ensuring that every household has access to food that nourishes both the body and the soul.\"",
+    "author": "— Team Dinajpur Organic Fruits"
+  }
+}
