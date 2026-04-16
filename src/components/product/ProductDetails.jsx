@@ -112,6 +112,57 @@ const ProductDetails = () => {
     setTimeout(() => setNotification(false), 2000);
   };
 
+  const renderDescription = (desc) => {
+    if (!desc) return null;
+
+    const lines = desc
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (lines.length === 0) {
+      return null;
+    }
+
+    const [firstLine, ...restLines] = lines;
+    const hasTitle = firstLine.endsWith(":");
+    const renderLineWithBoldLabel = (line, className = "") => {
+      const colonIndex = line.indexOf(":");
+
+      if (colonIndex === -1) {
+        return <p className={className}>{line}</p>;
+      }
+
+      const label = line.slice(0, colonIndex + 1);
+      const content = line.slice(colonIndex + 1).trim();
+
+      return (
+        <p className={className}>
+          <span className="font-semibold text-gray-900">{label}</span>
+          {content ? ` ${content}` : ""}
+        </p>
+      );
+    };
+
+    return (
+      <div className="mt-4 space-y-3 text-[14px] leading-7 text-gray-600">
+        {hasTitle ? (
+          <h3 className="text-[15px] font-semibold text-gray-900">
+            {firstLine}
+          </h3>
+        ) : (
+          renderLineWithBoldLabel(firstLine)
+        )}
+
+        {restLines.map((line, index) => (
+          <div key={`${line}-${index}`}>
+            {renderLineWithBoldLabel(line, "whitespace-pre-line")}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <StatusHandler loading={loading} product={product}>
       {product && (
@@ -179,12 +230,12 @@ const ProductDetails = () => {
                 {product.cat}
               </div>
               {/*Product name */}
-              <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+              <h1 className="text-2xl font-semibold text-gray-900 mt-6 mb-2">
                 {product.name}
               </h1>
 
               {/* rating */}
-              <div className="flex items-center gap-2 text-[12px] text-gray-500 mb-4">
+              {/* <div className="flex items-center gap-2 text-[12px] text-gray-500 mb-4">
                 <div className="flex items-center gap-1 text-amber-400">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <BiStar
@@ -198,7 +249,7 @@ const ProductDetails = () => {
                 </div>
                 <span>({product.rating})</span>
                 <span>{product.reviews} reviews</span>
-              </div>
+              </div> */}
 
               {/* price */}
               <div className="flex items-center gap-3 mb-4">
@@ -351,9 +402,7 @@ const ProductDetails = () => {
               </div>
               {/* Description Section */}
               {activeTab === "description" && (
-                <p className="text-gray-600 text-[14px] leading-6 mt-4">
-                  {product.desc}
-                </p>
+                renderDescription(product.desc)
               )}
               {/* Reviews Section */}
               {activeTab === "reviews" && (

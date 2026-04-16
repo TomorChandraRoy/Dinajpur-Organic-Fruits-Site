@@ -10,8 +10,7 @@ import {
   BiX,
 } from "react-icons/bi";
 import { useCart } from "../context/CartContext";
-import useAxiosPublic from "../hooks/useAxiosPublic";
-import { BeatLoader } from "react-spinners";
+import products from "../utils/data/products.json";
 import categoryShopData from "../utils/data/categoryShopData.json";
 
 const { productImages, categoryVisuals } = categoryShopData;
@@ -22,10 +21,7 @@ const CategoryShop = () => {
   const { categoryName } = useParams();
   const { addToCart } = useCart();
   const decodedCategory = decodeURIComponent(categoryName || "all");
-  const axiosPublic = useAxiosPublic();
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(decodedCategory);
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
@@ -35,41 +31,20 @@ const CategoryShop = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleAddToCart = (product) => {
-    // ডাটাবেজে সেভ করা ইমেজ থাকলে সেটি নেবে, না হলে ডিফল্ট ইমেজ দেখাবে
-    const displayImage =
-      Array.isArray(product.image) && product.image.length > 0
-        ? product.image[0]
-        : typeof product.image === "string"
-          ? product.image
-          : productImages[0];
-
-    addToCart({ ...product, image: displayImage });
+    // Find the correct dynamic image for the product
+    const productImage = productImages[product.id % productImages.length];
+    // Pass the image along with other product details to the cart
+    addToCart({ ...product, image: productImage });
 
     setNotification(product.name);
     setTimeout(() => setNotification(null), 2000);
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const res = await axiosPublic.get("/getAllProducts");
-        setProducts(Array.isArray(res.data) ? res.data : []);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, [axiosPublic]);
-
-  useEffect(() => {
     setSelectedCategory(decodedCategory);
   }, [decodedCategory]);
 
   const categories = useMemo(() => {
-    if (!products.length) return [];
     const counts = products.reduce((acc, product) => {
       acc[product.cat] = (acc[product.cat] || 0) + 1;
       return acc;
@@ -79,7 +54,7 @@ const CategoryShop = () => {
       name,
       count: counts[name] || 0,
     }));
-  }, [products]);
+  }, []);
 
   const filteredProducts = useMemo(() => {
     let nextProducts = [...products];
@@ -116,7 +91,7 @@ const CategoryShop = () => {
       nextProducts.sort((a, b) => b.orig - b.price - (a.orig - a.price));
 
     return nextProducts;
-  }, [badgeFilter, priceMax, priceMin, selectedCategory, sortBy, products]);
+  }, [badgeFilter, priceMax, priceMin, selectedCategory, sortBy]);
 
   const resetFilters = () => {
     setSelectedCategory("all");
@@ -151,7 +126,7 @@ const CategoryShop = () => {
             onClick={() => navigate("/")}
             className="font-semibold text-green-700 transition hover:text-green-800"
           >
-            Home
+            Home fghgfhgfhfhfdh
           </button>
           <BiChevronRight className="text-base" />
           <span className="font-medium text-gray-700">{selectedCategory}</span>
@@ -317,13 +292,7 @@ const CategoryShop = () => {
           </aside>
 
           <div>
-            {loading ? (
-              <div className="flex justify-center items-center py-20">
-                <BeatLoader color="#047857" size={15} />
-              </div>
-            ) : (
-              <>
-                <div className="mb-5 flex flex-col gap-4 rounded-2xl border border-[#ddd8ca] bg-white px-4 py-4 shadow-sm md:flex-row md:items-center md:justify-between">
+            <div className="mb-5 flex flex-col gap-4 rounded-2xl border border-[#ddd8ca] bg-white px-4 py-4 shadow-sm md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">
                   {shopTitle}
@@ -361,20 +330,19 @@ const CategoryShop = () => {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3">
               {filteredProducts.map((product) => {
-                const discount =
-                  product.orig > product.price
-                    ? Math.round(((product.orig - product.price) / product.orig) * 100)
-                    : 0;
+                const discount = Math.round(
+                  ((product.orig - product.price) / product.orig) * 100,
+                );
 
                 return (
                   <article
-                    key={product._id || product.id}
+                    key={product.id}
                     className="overflow-hidden rounded-2xl border border-[#d9d4c8] bg-white shadow-[0_10px_24px_rgba(17,24,39,0.04)] transition duration-200"
                   >
                     <div
                       className="relative aspect-[0.96] cursor-pointer overflow-hidden"
                       style={{ background: product.bg || "#f4f8f3" }}
-                      onClick={() => openProduct(product._id || product.id)}
+                      onClick={() => openProduct(product.id)}
                     >
                       <span
                         className={`absolute left-3 top-3 z-10 rounded-md px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white ${
@@ -396,17 +364,7 @@ const CategoryShop = () => {
                       </button>
 
                       <img
-                        src={
-                          Array.isArray(product.image) && product.image.length > 0
-                            ? product.image[0]
-                            : typeof product.image === "string"
-                              ? product.image
-                              : productImages[
-                                  (Number(
-                                    (product._id || product.id).replace(/\D/g, ""),
-                                  ) || 0) % productImages.length
-                                ]
-                        }
+                        src={productImages[product.id % productImages.length]}
                         alt={product.name}
                         className="h-full w-full object-cover transition duration-300 hover:scale-105"
                         loading="lazy"
@@ -420,7 +378,7 @@ const CategoryShop = () => {
 
                       <h3
                         className="mb-1  cursor-pointer text-sm font-semibold leading-5 text-gray-900 transition hover:text-green-700"
-                        onClick={() => openProduct(product._id || product.id)}
+                        onClick={() => openProduct(product.id)}
                       >
                         {product.name}
                       </h3>
@@ -460,8 +418,6 @@ const CategoryShop = () => {
                 No products found for this filter.
               </div>
             )}
-          </>
-        )}
           </div>
         </div>
 

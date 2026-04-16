@@ -1,11 +1,12 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useState, useEffect } from "react";
 import { BiPackage, BiX } from "react-icons/bi";
 
 import { FiUsers, FiBox } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { BeatLoader } from "react-spinners";
 import adminOrdersData from "../../utils/data/adminOrders.json";
-import productsData from "../../utils/data/products.json";
 import Sidebar from "./admin/Sidebar";
 import TopHeader from "./admin/TopHeader";
 import AddProductForm from "./admin/AddProductForm";
@@ -25,14 +26,30 @@ export default function AdminDashboard() {
   const [userHistory, setUserHistory] = useState(null);
 
   const [allOrders, setAllOrders] = useState(adminOrdersData || []);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
-  const [products, setProducts] = useState(productsData || []);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const res = await axiosPublic.get("/getAllProducts");
+        setProducts(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        console.error("Error fetching products in Admin:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, [axiosPublic]);
 
   const handleAddProduct = (newProduct) => {
     // API থেকে সেভ হওয়া ডেটা লোকাল স্টেটে যোগ করা হচ্ছে
     const productWithId = {
       ...newProduct,
-      id: newProduct._id || newProduct.id || Date.now(),
+      id: newProduct._id || newProduct.id,
     };
     setProducts([...products, productWithId]);
     setActiveTab("products");
@@ -87,7 +104,9 @@ export default function AdminDashboard() {
           .includes(searchQuery.toLowerCase()) ||
         (item.phone || "").includes(searchQuery) ||
         (item.id &&
-          String(item.id).toLowerCase().includes(searchQuery.toLowerCase())),
+          String(item.id).toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item._id &&
+          String(item._id).toLowerCase().includes(searchQuery.toLowerCase())),
     );
   }, [searchQuery, allOrders, usersList, products, activeTab]);
 
@@ -141,7 +160,11 @@ export default function AdminDashboard() {
           />
           <StatCards stats={stats} />
 
-          {activeTab === "add-product" ? (
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <BeatLoader color="#047857" size={15} />
+            </div>
+          ) : activeTab === "add-product" ? (
             <AddProductForm handleAddProduct={handleAddProduct} />
           ) : (
             <DataTable

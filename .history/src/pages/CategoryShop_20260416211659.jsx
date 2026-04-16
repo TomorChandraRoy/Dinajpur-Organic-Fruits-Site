@@ -361,14 +361,13 @@ const CategoryShop = () => {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3">
               {filteredProducts.map((product) => {
-                const discount =
-                  product.orig > product.price
-                    ? Math.round(((product.orig - product.price) / product.orig) * 100)
-                    : 0;
+                const discount = Math.round(
+                  ((product.orig - product.price) / product.orig) * 100,
+                );
 
                 return (
                   <article
-                    key={product._id || product.id}
+                    key={product.id}
                     className="overflow-hidden rounded-2xl border border-[#d9d4c8] bg-white shadow-[0_10px_24px_rgba(17,24,39,0.04)] transition duration-200"
                   >
                     <div
@@ -459,9 +458,8 @@ const CategoryShop = () => {
               <div className="rounded-2xl border border-dashed border-[#d9d4c8] bg-white px-6 py-16 text-center text-gray-500 shadow-sm">
                 No products found for this filter.
               </div>
+            
             )}
-          </>
-        )}
           </div>
         </div>
 

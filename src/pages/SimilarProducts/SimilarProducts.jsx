@@ -1,10 +1,40 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import  products  from "../../utils/data/products.json";
 import SimilarProducts from "../../components/product/SimilarProducts";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SimilarProductsPage = () => {
   const { id } = useParams();
-  const product = products.find((p) => String(p.id) === String(id));
+  const axiosPublic = useAxiosPublic();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const res = await axiosPublic.get(`/getSingleProduct/${id}`);
+        setProduct(res.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [axiosPublic, id]);
+
+  if (loading) {
+    return (
+      <section className="py-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-gray-500">Loading similar products...</p>
+        </div>
+      </section>
+    );
+  }
 
   if (!product) {
     return (
@@ -21,7 +51,10 @@ const SimilarProductsPage = () => {
 
   return (
     <section>
-      <SimilarProducts currentProductId={product.id} category={product.cat} />
+      <SimilarProducts
+        currentProductId={product._id || product.id}
+        category={product.cat || product.category}
+      />
     </section>
   );
 };

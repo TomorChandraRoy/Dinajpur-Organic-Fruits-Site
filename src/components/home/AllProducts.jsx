@@ -10,17 +10,10 @@ const AllProducts = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { addToCart } = useCart();
-  const {
-    badgeText,
-    title,
-    subtitle,
-    notification: notificationText,
-    productImages,
-  } = allProductsData;
+  const { badgeText, title, subtitle,notification: notificationText,productImages,} = allProductsData;
   const [notification, setNotification] = useState(false);
 
   const [products, setProducts] = useState([]);
-  console.log(products,"products");
 
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();

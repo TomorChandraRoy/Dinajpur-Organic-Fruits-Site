@@ -1,36 +1,58 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import products from "../../utils/data/products.json";
 import similarProductsData from "../../utils/data/similarProductsData.json";
 import { BiHeart, BiPlus, BiCheck } from "react-icons/bi";
 import { useCart } from "../../context/CartContext";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
+
   const navigate = useNavigate();
   const location = useLocation();
   const { addToCart } = useCart();
+  const axiosPublic = useAxiosPublic();
   const [notification, setNotification] = useState(false);
+  const [products, setProducts] = useState([]);
   const { title, notificationText, productImages } = similarProductsData;
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axiosPublic.get("/getAllProducts");
+        setProducts(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        console.error("Error fetching similar products:", error);
+        setProducts([]);
+      }
+    };
 
-  // const items = products
-  //   .filter((p) => p.cat === category && p.id !== currentProductId)
-  //   .slice(0, limit);
+    fetchProducts();
+  }, [axiosPublic]);
 
-  // if (items.length === 0) return null;
+  const normalizedCategory = String(category || "")
+    .trim()
+    .toLowerCase();
 
-// 1. Data Filter Logic (Fixed syntax & added safety)
   const items = useMemo(() => {
-    if (!products || !Array.isArray(products)) return [];
+    if (!products || !Array.isArray(products) || !normalizedCategory) {
+      return [];
+    }
 
     return products
-      .filter(
-        (p) =>
-          p.cat === category &&
-          String(p.id) !== String(currentProductId)
-      )
+      .filter((p) => {
+        const productCategory = String(p.cat || p.category || "")
+          .trim()
+          .toLowerCase();
+
+        return (
+          productCategory === normalizedCategory &&
+          String(p._id || p.id) !== String(currentProductId)
+        );
+      })
       .slice(0, limit);
-  }, [category, currentProductId, limit]);
+  }, [currentProductId, limit, normalizedCategory, products]);
+
+  if (!normalizedCategory || items.length === 0) return null;
 
 
   return (
@@ -40,18 +62,29 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {items.map((p) => {
-          const discount = Math.round(((p.orig - p.price) / p.orig) * 100);
+        {items.map((p, index) => {
+          const discount =
+            p.orig > p.price
+              ? Math.round(((p.orig - p.price) / p.orig) * 100)
+              : 0;
+          const productId = p._id || p.id;
+          const displayImage =
+            Array.isArray(p.image) && p.image.length > 0
+              ? p.image[0]
+              : typeof p.image === "string"
+                ? p.image
+                : productImages[index % productImages.length];
+
           return (
             <article
-              key={p.id}
+              key={productId}
               className="overflow-hidden rounded-2xl border border-[#d9d4c8] bg-white shadow-[0_10px_24px_rgba(17,24,39,0.04)] transition duration-200"
             >
               <div
                 className="relative aspect-[0.96] cursor-pointer overflow-hidden"
                 style={{ background: p.bg || "#f4f8f3" }}
                 onClick={() =>
-                  navigate(`/product/${p.id}`, {
+                  navigate(`/product/${productId}`, {
                     state: { from: location.pathname },
                   })
                 }
@@ -77,7 +110,7 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
                   <BiHeart className="h-4 w-4" />
                 </button>
                 <img
-                  src={productImages[p.id % productImages.length]}
+                  src={displayImage}
                   alt={p.name}
                   className="h-full w-full object-cover transition duration-300 hover:scale-105"
                   loading="lazy"
@@ -91,7 +124,7 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
                 <h3
                   className="mb-1 cursor-pointer text-sm font-semibold leading-5 text-gray-900 transition hover:text-green-700"
                   onClick={() =>
-                    navigate(`/product/${p.id}`, {
+                    navigate(`/product/${productId}`, {
                       state: { from: location.pathname },
                     })
                   }
@@ -117,9 +150,7 @@ const SimilarProducts = ({ currentProductId, category, limit = 4 }) => {
                     className="cursor-pointer inline-flex items-center gap-1.5 rounded-lg bg-green-700 px-4 py-2 text-xs font-bold text-white transition hover:bg-green-800"
                     onClick={(e) => {
                       e.stopPropagation();
-                      const productImage =
-                        productImages[p.id % productImages.length];
-                      addToCart({ ...p, image: productImage });
+                      addToCart({ ...p, image: displayImage });
                       setNotification(true);
                       setTimeout(() => setNotification(false), 2000);
                     }}

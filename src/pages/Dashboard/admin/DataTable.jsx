@@ -175,7 +175,7 @@ export default function DataTable({
                           <button
                             onClick={() =>
                               setProducts(
-                                products.filter((p) => p.id !== item.id),
+                                products.filter((p) => (p._id || p.id) !== (item._id || item.id)),
                               )
                             }
                             className="p-3 bg-red-50 text-red-500 rounded-2xl hover:bg-red-500
