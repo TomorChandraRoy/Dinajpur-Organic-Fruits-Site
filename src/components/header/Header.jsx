@@ -1,11 +1,22 @@
-import Navbar from "../../../common/Navbar";
-import ToolBar from "../ToolBar";
+import Navbar from "../../common/Navbar";
+import ToolBar from "../home/ToolBar";
 import MainDesktopHeader from "./MainDesktopHeader";
 import MainMobileHeader from "./MainMobileHeader";
-import useHeader from "../../../hooks/useHeader";
+import useHeader from "../../hooks/useHeader";
 
 const Header = () => {
-  const {user,isOpen,openMenu,menuOpen,closeMenu,mobileDropdownRef,desktopDropdownRef,toggleDropdown,closeDropdown,handleSignOut} = useHeader();
+  const {
+    user,
+    isOpen,
+    openMenu,
+    menuOpen,
+    closeMenu,
+    mobileDropdownRef,
+    desktopDropdownRef,
+    toggleDropdown,
+    closeDropdown,
+    handleSignOut,
+  } = useHeader();
 
   return (
     <>
@@ -33,13 +44,12 @@ const Header = () => {
           handleSignOut={handleSignOut}
         />
         {/* Navbar */}
-        {/* <div className="hidden lg:block">
+        <div className="hidden lg:block">
           <Navbar />
-        </div> */}
+        </div>
       </div>
     </>
   );
 };
 
 export default Header;
-

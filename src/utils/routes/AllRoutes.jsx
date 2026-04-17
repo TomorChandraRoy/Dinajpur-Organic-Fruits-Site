@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../../App";
 import Error from "../../pages/Error/Error";
-import Home from "../../pages/Home";
+import Home from "../../pages/HomePage/Home";
 import SignIn from "../../pages/Auth/SignIn";
 import SignUp from "../../pages/Auth/SignUp";
-import OrderTracking from "../../pages/OrderTracking/OrderTracking";
+import OrderTracking from "../../pages/OrderTrackingPage/OrderTracking";
 import ProductDetails from "../../components/product/ProductDetails";
 import SimilarProductsPage from "../../pages/SimilarProducts/SimilarProducts";
 import CategoryShop from "../../pages/CategoryShop";
@@ -68,6 +68,10 @@ export const AllRoutes = createBrowserRouter([
       {
         path: "/product/:id/similar",
         element: <SimilarProductsPage></SimilarProductsPage>,
+      },
+      {
+        path: "/shop",
+        element: <CategoryShop></CategoryShop>,
       },
       {
         path: "/shop/:categoryName",

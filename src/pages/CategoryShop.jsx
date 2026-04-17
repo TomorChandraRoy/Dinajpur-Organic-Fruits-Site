@@ -53,16 +53,24 @@ const CategoryShop = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await axiosPublic.get("/getAllProducts");
+        const searchParams = new URLSearchParams(location.search);
+        const searchQuery = searchParams.get("search");
+        
+        const endpoint = searchQuery 
+          ? `/getAllProducts?search=${encodeURIComponent(searchQuery)}`
+          : "/getAllProducts";
+          
+        const res = await axiosPublic.get(endpoint);
         setProducts(Array.isArray(res.data) ? res.data : []);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setProducts([]); // Clear products on error (like 404 not found)
       } finally {
         setLoading(false);
       }
     };
     fetchProducts();
-  }, [axiosPublic]);
+  }, [axiosPublic, location.search]);
 
   useEffect(() => {
     setSelectedCategory(decodedCategory);
