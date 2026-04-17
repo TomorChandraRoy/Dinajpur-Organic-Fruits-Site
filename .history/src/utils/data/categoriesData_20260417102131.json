@@ -1,0 +1,43 @@
+{
+  "badgeText": "Browse by Category",
+  "title": "Our Product Collections",
+  "subtitle": "Farm-fresh organic products for a healthier lifestyle",
+  "categories": [
+    {
+      "name": "Lychee (লিচু)",
+      "image": "/src/assets/lychee.png"
+    },
+    {
+      "name": "Banana (কলা)",
+      "image": "/src/assets/banana.jpg"
+    },
+    {
+      "name": "Mango (আম)",
+      "image": "/src/assets/mango-food.png"
+    },
+    {
+      "name": "Papaya (পেঁপে)",
+      "image": "/src/assets/papaya.png"
+    },
+    {
+      "name": "Jujube (বরই)",
+      "image": "/src/assets/Kul-Boroi.png"
+    },
+    {
+      "name": "Shidol (শিদল)",
+      "image": "/src/assets/sidol.png"
+    },
+    {
+      "name": "Wheat ",
+      "image": "/src/assets/banna.png"
+    },
+    {
+      "name": "Papad",
+      "image": "/src/assets/sublogo.png"
+    },
+    {
+      "name": "Rice",
+      "image": "/src/assets/mango.webp"
+    }
+  ]
+}

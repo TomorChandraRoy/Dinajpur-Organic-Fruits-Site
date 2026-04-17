@@ -1,0 +1,21 @@
+{
+  "productImages": [
+    "/src/assets/mango.webp",
+    "/src/assets/banna.png",
+    "/src/assets/lechnu.jpg",
+    "/src/assets/lachu.jpg",
+    "/src/assets/sublogo.png",
+    "/src/assets/mangoo.jpg"
+  ],
+  "categoryVisuals": {
+    "Lychee": { "image": "/src/assets/lechnu.png" },
+    "Banana": { "image": "/src/assets/banna.png" },
+    "Mango": { "image": "/src/assets/mango.webp" },
+    "Papaya": { "image": "/src/assets/mangoo.jpg" },
+    "Jujube": { "image": "/src/assets/lachu.jpg" },
+    "Shidol": { "image": "/src/assets/sublogo.png" },
+    "Beaten Rice": { "image": "/src/assets/banna.png" },
+    "Papad": { "image": "/src/assets/sublogo.png" },
+    "Rice": { "image": "/src/assets/mango.webp" }
+  }
+}
